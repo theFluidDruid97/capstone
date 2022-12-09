@@ -8,7 +8,7 @@ const AddCert = () => {
   const [message, setMessage] = useState("");
 
   let addSubmit = async (e) => {
-    e.preventDefault();
+    // e.preventDefault(); //Used to test network. Will prevent page refresh.
     try {
       let res = await fetch("http://localhost:8080/training", {
         method: "POST",

@@ -11,6 +11,7 @@ const App = () => {
   const [members, setMembers] = useState();
   const [id, setId] = useState();
   const [search, setSearch] = useState("");
+  const [state, setState] = useState();
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -20,7 +21,16 @@ const App = () => {
   return (
     <div className="App">
       <Context.Provider
-        value={{ members, setMembers, id, setId, search, setSearch }}
+        value={{
+          members,
+          setMembers,
+          id,
+          setId,
+          state,
+          setState,
+          search,
+          setSearch,
+        }}
       >
         <Router>
           <Routes>

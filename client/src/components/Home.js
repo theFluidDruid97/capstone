@@ -10,7 +10,7 @@ import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { search, members, setId } = useContext(Context);
+  const { search, members, id, setId, state, setState } = useContext(Context);
   return (
     <div className="Body">
       <NavBar />
