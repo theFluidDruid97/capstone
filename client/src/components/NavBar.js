@@ -9,17 +9,11 @@ const NavBar = () => {
   };
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-      <a className="navbar-brand ml-5" href="#">
+      <a className="navbar-brand ml-5" href="/">
         <img
-          src="https://user-images.githubusercontent.com/110724575/206316998-3088ca02-7946-49af-8230-743521ef2206.png"
+          src="https://user-images.githubusercontent.com/111238515/206806904-bafeede1-58e5-4863-8004-9c5131a73ece.png"
           alt="TrainTrack Logo"
-          width="50"
-          height="50"
-        />
-        <img
-          src="https://user-images.githubusercontent.com/110724575/206736883-a5e70753-79ef-4d5d-8e52-82cec4ce8c47.png"
-          alt="TrainTrack"
-          width="150"
+          width="225"
           height="50"
         />
       </a>
@@ -35,7 +29,7 @@ const NavBar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <a
-        href="#"
+        href="all_members"
         className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
@@ -43,7 +37,7 @@ const NavBar = () => {
         All Members
       </a>
       <a
-        href="#"
+        href="add_member"
         className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
@@ -51,7 +45,7 @@ const NavBar = () => {
         Add Member
       </a>
       <a
-        href="#"
+        href="all_training"
         className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
@@ -59,7 +53,7 @@ const NavBar = () => {
         All Training
       </a>
       <a
-        href="#"
+        href="add_training"
         className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"

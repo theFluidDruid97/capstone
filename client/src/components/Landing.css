@@ -1,0 +1,15 @@
+.landing {
+    background-image: linear-gradient(to bottom right,
+    rgba(253, 209, 141),
+    rgba(78, 53, 21));
+    min-height: 100vh;
+}
+
+.head {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
