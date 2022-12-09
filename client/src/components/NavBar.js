@@ -36,7 +36,7 @@ const NavBar = () => {
       </button>
       <a
         href="#"
-        class="btn btn-outline-secondary ml-2"
+        className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
       >
@@ -44,7 +44,7 @@ const NavBar = () => {
       </a>
       <a
         href="#"
-        class="btn btn-outline-secondary ml-2"
+        className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
       >
@@ -52,7 +52,7 @@ const NavBar = () => {
       </a>
       <a
         href="#"
-        class="btn btn-outline-secondary ml-2"
+        className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
       >
@@ -60,7 +60,7 @@ const NavBar = () => {
       </a>
       <a
         href="#"
-        class="btn btn-outline-secondary ml-2"
+        className="btn btn-outline-secondary ml-2"
         role="button"
         aria-pressed="true"
       >
@@ -89,83 +89,83 @@ const NavBar = () => {
             Search By
           </a>
           <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 Rank
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 Last Name
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 First Name
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 DoD ID
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 E-Mail
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 Unit
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 Office Symbol
               </label>
             </div>
-            <div class="form-check ml-2">
+            <div className="form-check ml-2">
               <input
                 type="checkbox"
-                class="form-check-input"
+                className="form-check-input"
                 id="dropdownCheck"
               />
-              <label class="form-check-label" for="dropdownCheck">
+              <label className="form-check-label" htmlFor="dropdownCheck">
                 AFSC
               </label>
             </div>
