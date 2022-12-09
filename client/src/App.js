@@ -11,6 +11,7 @@ export const Context = React.createContext();
 const App = () => {
   const [members, setMembers] = useState();
   const [id, setId] = useState();
+  const [state, setState] = useState();
   console.log("members", members);
   useEffect(() => {
     fetch("http://localhost:8080/members")
@@ -20,7 +21,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Context.Provider value={{ members, setMembers, id, setId }}>
+      <Context.Provider value={{ members, setMembers, id, setId, state, setState }}>
         <Router>
           <Routes>
             <Route path="/home" element={<Home />} />
