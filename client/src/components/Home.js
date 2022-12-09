@@ -10,7 +10,8 @@ import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { members, setId } = useContext(Context);
+  const { members, setId, id } = useContext(Context);
+  const { state, setState } = useContext(Context);
   console.log(members);
   return (
     <div className="Body">
@@ -56,8 +57,10 @@ const Home = () => {
                       variant="dark"
                       size="large"
                       onClick={() => {
-                        setId(item.id);
-                        navigate(`/members/:${item.id}`);
+                        setId(item.id)
+                        navigate(`/members/:${item.id}`)
+                        
+                       ;
                       }}
                     >
                       👤

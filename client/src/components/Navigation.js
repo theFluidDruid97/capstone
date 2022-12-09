@@ -20,14 +20,14 @@ function Navigation() {
   };
 
   return (
-    <>
+    <div>
       <Navbar className="NavBar" bg="dark" variant="dark" expand="lg">
         <Container>
           <Navbar.Brand href="/home">
             <img
-              src="https://user-images.githubusercontent.com/111238515/206565037-abbe8c97-1c25-407c-9bab-0744b9551a7f.png"
-              width="90"
-              height="90"
+              src="https://user-images.githubusercontent.com/111238515/206746681-59655baf-8190-493e-8180-d5ab856a9509.png"
+              width="180"
+              height="180"
               className="d-inline-block align-center"
               alt="Train logo"
             />{" "}
@@ -52,7 +52,7 @@ function Navigation() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    </>
+    </div>
   );
 }
 

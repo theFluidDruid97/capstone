@@ -2,3 +2,14 @@
     position: absolute;
     top: 0px;
 }
+.d-flex {
+    background-image: linear-gradient(to bottom right,
+        rgba(253, 209, 141),
+        rgba(78, 53, 21));
+    min-height: 100vh;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white; */
+  }
