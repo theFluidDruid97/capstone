@@ -3,15 +3,15 @@
       rgba(253, 209, 141),
       rgba(78, 53, 21));
   min-height: 100vh;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
-  color: white;
+  justify-content: center;
+  color: white; */
 }
 
 .Home1 {
-  margin-left: 15%;
+  /* margin-left: 15%;
   margin-right: 15%;
   display: flex;
   margin-top: 5%;
@@ -20,8 +20,14 @@
   align-items: center;
   gap: 10px;
   gap: 10px 20px;
-  /* row-gap column gap */
+  row-gap column gap;
   row-gap: 10px;
   column-gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: wrap; */
+  margin: 0;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }

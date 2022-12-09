@@ -1,11 +1,8 @@
-import "./AddMember.css";
-import React, { useState } from "react";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import { useState } from "react";
 
 const AddCert = () => {
-
   const [training_name, setTraining_name] = useState("");
   const [cert_duration, setCert_duration] = useState("");
   const [message, setMessage] = useState("");
@@ -16,7 +13,7 @@ const AddCert = () => {
       let res = await fetch("http://localhost:8080/training", {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           training_name: training_name,
@@ -38,13 +35,27 @@ const AddCert = () => {
 
   return (
     <Form onSubmit={addSubmit}>
-      <Form.Group className="mb-5 mt-5" controlId="formBasicTraining_name" onChange={(e) => setTraining_name(e.target.value)}>
+      <Form.Group
+        className="mb-5 mt-5"
+        controlId="formBasicTraining_name"
+        onChange={(e) => setTraining_name(e.target.value)}
+      >
         <Form.Label>Name</Form.Label>
-        <Form.Control type="title" placeholder="Enter Certification/Training Name" />
+        <Form.Control
+          type="title"
+          placeholder="Enter Certification/Training Name"
+        />
       </Form.Group>
-      <Form.Group className="mb-5" controlId="formBasicCert_duration" onChange={(e) => setCert_duration(e.target.value)}>
+      <Form.Group
+        className="mb-5"
+        controlId="formBasicCert_duration"
+        onChange={(e) => setCert_duration(e.target.value)}
+      >
         <Form.Label>Frequency</Form.Label>
-        <Form.Control type="frequency" placeholder="Enter Certification/Training Frequency (In Months)" />
+        <Form.Control
+          type="frequency"
+          placeholder="Enter Certification/Training Frequency (In Months)"
+        />
       </Form.Group>
       <Button variant="secondary" type="submit">
         Submit
@@ -52,6 +63,6 @@ const AddCert = () => {
       <div className="message">{message ? <p>{message}</p> : null}</div>
     </Form>
   );
-}
+};
 
 export default AddCert;
