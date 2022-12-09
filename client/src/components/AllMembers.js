@@ -6,15 +6,15 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../App.js";
 import NavBar from "./NavBar.js";
-import "./Home.css";
+import "./AllMembers.css";
 
-const Home = () => {
+const AllMembers = () => {
   const navigate = useNavigate();
   const { search, members, id, setId, state, setState } = useContext(Context);
   return (
     <div className="Body">
       <NavBar />
-      <Container className="Home1">
+      <Container className="AllMembers">
         <Table
           className="Table1"
           striped
@@ -79,7 +79,7 @@ const Home = () => {
                         size="large"
                         onClick={() => {
                           setId(item.id);
-                          navigate(`/members/:${item.id}`);
+                          navigate(`/all_members/:${item.id}`);
                         }}
                       >
                         👤
@@ -95,4 +95,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AllMembers;
