@@ -6,12 +6,11 @@ import Home from "./components/Home";
 import AddMember from "./components/AddMember.js";
 import AddCert from "./components/AddCert.js";
 import MemberProfile from "./components/MemberProfile.js";
-export const Context = React.createContext();
 
 const App = () => {
   const [members, setMembers] = useState();
   const [id, setId] = useState();
-  console.log("members", members);
+  const [search, setSearch] = useState("");
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -20,7 +19,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <Context.Provider value={{ members, setMembers, id, setId }}>
+      <Context.Provider
+        value={{ members, setMembers, id, setId, search, setSearch }}
+      >
         <Router>
           <Routes>
             <Route path="/home" element={<Home />} />
@@ -34,4 +35,5 @@ const App = () => {
   );
 };
 
+export const Context = React.createContext();
 export default App;
