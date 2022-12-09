@@ -68,4 +68,5 @@ const MemberProfile = () => {
     </div>
   );
 };
+
 export default MemberProfile;
