@@ -1,32 +1,15 @@
-.landing {
+.Body {
     background-image: linear-gradient(to bottom right,
     rgba(253, 209, 141),
     rgba(78, 53, 21));
     min-height: 100vh;
 }
 
-.display-4 {
-    color: wheat;
-}
-
-.landing-form {
-    color: wheat;
-}
-
-.jumbotron {
-    text-align: center;
-    margin: 0;
+.AddTraining {
+    min-width: 70%;
     position: absolute;
-    top: 50%;
+    top: 55%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
-
-.btn {
-    width: 300px !important;
-}
-
-.footer {
-    color: wheat;
 }

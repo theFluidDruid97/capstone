@@ -1,11 +1,22 @@
 import { Context } from "../App.js";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import "./NavBar.css";
 
 const NavBar = () => {
-  const { search, setSearch } = useContext(Context);
+  const { search, setSearch, params, setParams, checked, setChecked } =
+    useContext(Context);
   const handleChange = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
+  };
+  const handleToggle = (e) => {
+    setChecked(!checked);
+    let titleIndex = params.indexOf(e.target.id);
+    let newParams = params.filter((param) => {
+      return e.target.checked;
+    });
+    console.log(params[titleIndex], e.target.checked);
+    console.log(newParams);
   };
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -32,7 +43,6 @@ const NavBar = () => {
         href="all_members"
         className="btn btn-outline-secondary ml-2"
         role="button"
-        aria-pressed="true"
       >
         All Members
       </a>
@@ -40,7 +50,6 @@ const NavBar = () => {
         href="add_member"
         className="btn btn-outline-secondary ml-2"
         role="button"
-        aria-pressed="true"
       >
         Add Member
       </a>
@@ -48,15 +57,13 @@ const NavBar = () => {
         href="all_training"
         className="btn btn-outline-secondary ml-2"
         role="button"
-        aria-pressed="true"
       >
         All Training
       </a>
       <a
         href="add_training"
-        className="btn btn-outline-secondary ml-2"
+        className="btn btn-outline-secondary ml-2 mr-2"
         role="button"
-        aria-pressed="true"
       >
         Add Training
       </a>
@@ -87,7 +94,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="rank"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 Rank
@@ -97,7 +106,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="last_name"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 Last Name
@@ -107,7 +118,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="first_name"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 First Name
@@ -117,7 +130,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="dod_id"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 DoD ID
@@ -127,7 +142,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="email"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 E-Mail
@@ -137,7 +154,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="unit"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 Unit
@@ -147,7 +166,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="office_symbol"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 Office Symbol
@@ -157,7 +178,9 @@ const NavBar = () => {
               <input
                 type="checkbox"
                 className="form-check-input"
-                id="dropdownCheck"
+                id="afsc"
+                defaultChecked={checked}
+                onChange={(e) => handleToggle(e)}
               />
               <label className="form-check-label" htmlFor="dropdownCheck">
                 AFSC

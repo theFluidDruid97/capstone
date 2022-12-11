@@ -1,7 +1,4 @@
 import React from "react";
-import Container from "react-bootstrap/Container";
-import Button from "react-bootstrap/Button";
-import Table from "react-bootstrap/Table";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../App.js";
@@ -9,20 +6,13 @@ import NavBar from "./NavBar.js";
 import "./AllMembers.css";
 
 const AllMembers = () => {
-  const navigate = useNavigate();
   const { search, members, id, setId, state, setState } = useContext(Context);
+  const navigate = useNavigate();
   return (
     <div className="Body">
       <NavBar />
-      <Container className="AllMembers">
-        <Table
-          className="Table1"
-          striped
-          bordered
-          hover
-          responsive
-          variant="dark"
-        >
+      <div className="AllMembers">
+        <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>
               <th>Status</th>
@@ -74,23 +64,22 @@ const AllMembers = () => {
                     <td>{item.office_symbol}</td>
                     <td>{item.afsc}</td>
                     <td>
-                      <Button
-                        variant="dark"
-                        size="large"
+                      <button
+                        className="btn btn-secondary"
                         onClick={() => {
                           setId(item.id);
                           navigate(`/all_members/:${item.id}`);
                         }}
                       >
                         👤
-                      </Button>
+                      </button>
                     </td>
                   </tr>
                 );
               })}
           </tbody>
-        </Table>
-      </Container>
+        </table>
+      </div>
     </div>
   );
 };
