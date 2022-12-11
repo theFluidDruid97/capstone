@@ -1,7 +1,5 @@
 import { Context } from "../App.js";
 import { useContext } from "react";
-import Table from "react-bootstrap/esm/Table.js";
-import Container from "react-bootstrap/esm/Container.js";
 import "./MemberProfile.css";
 // import Training from "./TrainingDummy.js";
 import NavBar from "./NavBar.js";
@@ -17,8 +15,8 @@ const MemberProfile = () => {
   return (
     <div className="Body">
       <NavBar />
-      <Container className="Member">
-        <Table striped bordered hover responsive variant="dark">
+      <div className="Member">
+        <table className="table">
           <thead>
             <tr>
               <th>Rank</th>
@@ -43,8 +41,8 @@ const MemberProfile = () => {
               <td>{state.afsc}</td>
             </tr>
           </tbody>
-        </Table>
-        <Table bordered striped hover variant="dark">
+        </table>
+        <table className="table">
           <thead>
             <tr>
               <th>Training</th>
@@ -63,8 +61,8 @@ const MemberProfile = () => {
               </tbody>
             );
           })}
-        </Table>
-      </Container>
+        </table>
+      </div>
     </div>
   );
 };

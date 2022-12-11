@@ -1,7 +1,6 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import NavBar from "./NavBar.js";
+import "./AddTraining.css";
 
 const AddTraining = () => {
   const [training_name, setTraining_name] = useState("");
@@ -35,37 +34,37 @@ const AddTraining = () => {
   };
 
   return (
-    <>
+    <div className="Body">
       <NavBar />
-      <Form onSubmit={addSubmit}>
-        <Form.Group
-          className="mb-5 mt-5"
-          controlId="formBasicTraining_name"
+      <form className="AddTraining" onSubmit={addSubmit}>
+        <div
+          className="form-group"
           onChange={(e) => setTraining_name(e.target.value)}
         >
-          <Form.Label>Name</Form.Label>
-          <Form.Control
+          <div className="form-label">Name</div>
+          <input
+            className="form-control bg-dark"
             type="title"
             placeholder="Enter Certification/Training Name"
           />
-        </Form.Group>
-        <Form.Group
-          className="mb-5"
-          controlId="formBasicCert_duration"
+        </div>
+        <div
+          className="form-group"
           onChange={(e) => setCert_duration(e.target.value)}
         >
-          <Form.Label>Frequency</Form.Label>
-          <Form.Control
+          <div className="form-label">Frequency</div>
+          <input
+            className="form-control bg-dark"
             type="frequency"
             placeholder="Enter Certification/Training Frequency (In Months)"
           />
-        </Form.Group>
-        <Button variant="secondary" type="submit">
+        </div>
+        <button className="btn btn-dark" type="submit">
           Submit
-        </Button>
+        </button>
         <div className="message">{message ? <p>{message}</p> : null}</div>
-      </Form>
-    </>
+      </form>
+    </div>
   );
 };
 

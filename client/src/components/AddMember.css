@@ -1,6 +1,15 @@
-.body {
+.Body {
     background-image: linear-gradient(to bottom right,
     rgba(253, 209, 141),
     rgba(78, 53, 21));
     min-height: 100vh;
+}
+
+.AddMember {
+    min-width: 70%;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
 }

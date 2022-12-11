@@ -9,11 +9,23 @@ import AddTraining from "./components/AddTraining.js";
 import MemberProfile from "./components/MemberProfile.js";
 
 const App = () => {
+  const initParams = [
+    "rank",
+    "last_name",
+    "first_name",
+    "dod_id",
+    "email",
+    "unit",
+    "office_symbol",
+    "afsc",
+  ];
   const [members, setMembers] = useState();
   const [id, setId] = useState();
   const [search, setSearch] = useState("");
   const [training, setTraining] = useState();
   const [state, setState] = useState();
+  const [params, setParams] = useState(initParams);
+  const [checked, setChecked] = useState(true);
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -22,8 +34,6 @@ const App = () => {
       .then((response) => response.json())
       .then((data) => setTraining(data));
   }, []);
-
-  console.log("t", training);
 
   return (
     <div className="App">
@@ -39,6 +49,10 @@ const App = () => {
           setSearch,
           training,
           setTraining,
+          params,
+          setParams,
+          checked,
+          setChecked,
         }}
       >
         <Router>
