@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar from "./NavBar.js";
+import NavBarAdd from "./NavBarAdd.js";
 import "./AddTraining.css";
 
 const AddTraining = () => {
@@ -20,7 +20,6 @@ const AddTraining = () => {
           cert_duration: cert_duration,
         }),
       });
-      let resJson = await res.json();
       if (res.status === 200) {
         setTraining_name("");
         setCert_duration("");
@@ -35,15 +34,15 @@ const AddTraining = () => {
 
   return (
     <div className="Body">
-      <NavBar />
-      <form className="AddTraining" onSubmit={addSubmit}>
+      <NavBarAdd />
+      <form className="AddTraining member-table" onSubmit={addSubmit}>
         <div
           className="form-group"
           onChange={(e) => setTraining_name(e.target.value)}
         >
           <div className="form-label">Name</div>
           <input
-            className="form-control bg-dark"
+            className="form-control bg-dark text-secondary"
             type="title"
             placeholder="Enter Certification/Training Name"
           />
@@ -54,12 +53,12 @@ const AddTraining = () => {
         >
           <div className="form-label">Frequency</div>
           <input
-            className="form-control bg-dark"
+            className="form-control bg-dark text-secondary"
             type="frequency"
             placeholder="Enter Certification/Training Frequency (In Months)"
           />
         </div>
-        <button className="btn btn-dark" type="submit">
+        <button className="btn btn-secondary" type="submit">
           Submit
         </button>
         <div className="message">{message ? <p>{message}</p> : null}</div>

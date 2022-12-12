@@ -2,7 +2,7 @@ import { Context } from "../App.js";
 import { useContext } from "react";
 import "./MemberProfile.css";
 // import Training from "./TrainingDummy.js";
-import NavBar from "./NavBar.js";
+import NavBarTraining from "./NavBarTraining.js";
 
 const MemberProfile = () => {
   const { members, id, training, setTraining, state, setState } =
@@ -14,9 +14,9 @@ const MemberProfile = () => {
 
   return (
     <div className="Body">
-      <NavBar />
+      <NavBarTraining />
       <div className="Member">
-        <table className="table">
+        <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>
               <th>Rank</th>
@@ -30,7 +30,7 @@ const MemberProfile = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr key={state.id}>
               <td>{state.rank}</td>
               <td>{state.last_name}</td>
               <td>{state.first_name}</td>
@@ -42,21 +42,19 @@ const MemberProfile = () => {
             </tr>
           </tbody>
         </table>
-        <table className="table">
+        <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>
-              <th>Training</th>
-              <th>Completion Date</th>
-              <th>Status</th>
+              <th>Training Name</th>
+              <th>Certification Duration</th>
             </tr>
           </thead>
           {training?.map((item) => {
             return (
               <tbody>
                 <tr key={item.id}>
-                  <td>{item.name}</td>
-                  <td>{item.due_date}</td>
-                  <td>{item.status}</td>
+                  <td>{item.training_name}</td>
+                  <td>{item.cert_duration}</td>
                 </tr>
               </tbody>
             );

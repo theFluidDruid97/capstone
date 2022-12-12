@@ -3,12 +3,12 @@ import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
-const NavBar = () => {
+const NavBarTraining = () => {
   const {
     search,
     setSearch,
-    memberParams,
-    setMemberParams,
+    trainingParams,
+    setTrainingParams,
     checked,
     setChecked,
   } = useContext(Context);
@@ -17,11 +17,15 @@ const NavBar = () => {
     setSearch(e.target.value);
   };
   const handleToggle = (e) => {
-    let updatedMemberParams = [...memberParams];
-    let updatedMemberParam = updatedMemberParams[0][e.target.id];
-    updatedMemberParam = !updatedMemberParam;
-    updatedMemberParams[0][e.target.id] = updatedMemberParam;
-    setMemberParams(updatedMemberParams);
+    let updatedTrainingParams = [...trainingParams];
+    console.log(updatedTrainingParams);
+    let updatedTrainingParam = updatedTrainingParams[0][e.target.id];
+    console.log(e.target.id, updatedTrainingParam);
+    updatedTrainingParam = !updatedTrainingParam;
+    console.log(e.target.id, updatedTrainingParam);
+    updatedTrainingParams[0][e.target.id] = updatedTrainingParam;
+    setTrainingParams(updatedTrainingParams);
+    console.log(trainingParams);
   };
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
@@ -95,10 +99,10 @@ const NavBar = () => {
                 <input
                   type="checkbox"
                   className="form-check-input bg-secondary"
-                  id="rank"
+                  id="training_name"
                   onChange={(e) => handleToggle(e)}
                 />
-                Rank
+                Training Name
               </label>
             </div>
             <div className="form-check ml-2">
@@ -106,76 +110,10 @@ const NavBar = () => {
                 <input
                   type="checkbox"
                   className="form-check-input bg-secondary"
-                  id="last_name"
+                  id="cert_duration"
                   onChange={(e) => handleToggle(e)}
                 />
-                Last Name
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="first_name"
-                  onChange={(e) => handleToggle(e)}
-                />
-                First Name
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="dod_id"
-                  onChange={(e) => handleToggle(e)}
-                />
-                DoD ID
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="email"
-                  onChange={(e) => handleToggle(e)}
-                />
-                E-Mail
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="unit"
-                  onChange={(e) => handleToggle(e)}
-                />
-                Unit
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="office_symbol"
-                  onChange={(e) => handleToggle(e)}
-                />
-                Office Symbol
-              </label>
-            </div>
-            <div className="form-check ml-2">
-              <label className="form-check-label" htmlFor="dropdownCheck">
-                <input
-                  type="checkbox"
-                  className="form-check-input bg-secondary"
-                  id="afsc"
-                  onChange={(e) => handleToggle(e)}
-                />
-                AFSC
+                Certification Duration
               </label>
             </div>
           </div>
@@ -185,4 +123,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default NavBarTraining;

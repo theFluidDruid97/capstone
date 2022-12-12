@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavBar from "./NavBar.js";
+import NavBarAdd from "./NavBarAdd.js";
 import "./AddMember.css";
 
 const AddMember = () => {
@@ -31,7 +31,6 @@ const AddMember = () => {
           afsc: afsc,
         }),
       });
-      let resJson = await res.json();
       if (res.status === 200) {
         setDod_id("");
         setRank("");
@@ -52,24 +51,13 @@ const AddMember = () => {
 
   return (
     <div className="Body">
-      <NavBar />
-      <div className="AddMember">
+      <NavBarAdd />
+      <div className="AddMember member-table">
         <form onSubmit={handleSubmit}>
-          <div
-            className="form-group"
-            onChange={(e) => setDod_id(e.target.value)}
-          >
-            <label htmlFor="dod_id">DoD ID #</label>
-            <input
-              className="form-control bg-dark"
-              type="text"
-              placeholder="Enter DoD Id #"
-            />
-          </div>
           <div className="form-group" onChange={(e) => setRank(e.target.value)}>
             <label htmlFor="rank">Rank</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
               placeholder="Enter Rank"
             />
@@ -80,7 +68,7 @@ const AddMember = () => {
           >
             <label htmlFor="last_name">Last Name</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
               placeholder="Enter Last Name"
             />
@@ -91,26 +79,37 @@ const AddMember = () => {
           >
             <label htmlFor="first_name">First Name</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
               placeholder="Enter First Name"
             />
           </div>
           <div
             className="form-group"
+            onChange={(e) => setDod_id(e.target.value)}
+          >
+            <label htmlFor="dod_id">DoD ID #</label>
+            <input
+              className="form-control bg-dark text-secondary"
+              type="text"
+              placeholder="Enter DoD ID #"
+            />
+          </div>
+          <div
+            className="form-group"
             onChange={(e) => setEmail(e.target.value)}
           >
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">E-Mail Address</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
-              placeholder="Enter Military Email"
+              placeholder="Enter Government E-Mail Address"
             />
           </div>
           <div className="form-group" onChange={(e) => setUnit(e.target.value)}>
             <label htmlFor="unit">Unit</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
               placeholder="Enter Unit"
             />
@@ -121,7 +120,7 @@ const AddMember = () => {
           >
             <label htmlFor="office_symbol">Office Symbol</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
               placeholder="Enter Office Symbol"
             />
@@ -129,12 +128,12 @@ const AddMember = () => {
           <div className="form-group" onChange={(e) => setAfsc(e.target.value)}>
             <label htmlFor="afsc">AFSC</label>
             <input
-              className="form-control bg-dark"
+              className="form-control bg-dark text-secondary"
               type="text"
-              placeholder="AFSC"
+              placeholder="Enter AFSC"
             />
           </div>
-          <button className="btn btn-dark" type="submit">
+          <button className="btn btn-secondary" type="submit">
             Submit
           </button>
           <div className="message">{message ? <p>{message}</p> : null}</div>

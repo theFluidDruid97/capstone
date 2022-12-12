@@ -3,29 +3,39 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import AllMembers from "./components/AllMembers.js";
+import AllTraining from "./components/AllTraining.js";
 import Landing from "./components/Landing";
 import AddMember from "./components/AddMember.js";
 import AddTraining from "./components/AddTraining.js";
 import MemberProfile from "./components/MemberProfile.js";
+import CreateAccount from "./components/CreateAccount.js";
 
 const App = () => {
-  const initParams = [
-    "rank",
-    "last_name",
-    "first_name",
-    "dod_id",
-    "email",
-    "unit",
-    "office_symbol",
-    "afsc",
+  const initMemberParams = [
+    {
+      rank: false,
+      last_name: false,
+      first_name: false,
+      dod_id: false,
+      email: false,
+      unit: false,
+      office_symbol: false,
+      afsc: false,
+    },
+  ];
+  const initTrainingParams = [
+    {
+      training_name: false,
+      cert_duration: false,
+    },
   ];
   const [members, setMembers] = useState();
   const [id, setId] = useState();
   const [search, setSearch] = useState("");
   const [training, setTraining] = useState();
   const [state, setState] = useState();
-  const [params, setParams] = useState(initParams);
-  const [checked, setChecked] = useState(true);
+  const [memberParams, setMemberParams] = useState(initMemberParams);
+  const [trainingParams, setTrainingParams] = useState(initTrainingParams);
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -49,10 +59,10 @@ const App = () => {
           setSearch,
           training,
           setTraining,
-          params,
-          setParams,
-          checked,
-          setChecked,
+          memberParams,
+          setMemberParams,
+          trainingParams,
+          setTrainingParams,
         }}
       >
         <Router>
@@ -60,8 +70,10 @@ const App = () => {
             <Route path="/" element={<Landing />} />
             <Route path="/all_members" element={<AllMembers />} />
             <Route path="/add_member" element={<AddMember />} />
-            <Route path="/add_training" element={<AddTraining />} />
             <Route path="/all_members/:id" element={<MemberProfile />} />
+            <Route path="/all_training" element={<AllTraining />} />
+            <Route path="/add_training" element={<AddTraining />} />
+            <Route path="/create_account" element={<CreateAccount />} />
           </Routes>
         </Router>
       </Context.Provider>
