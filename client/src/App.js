@@ -9,6 +9,8 @@ import AddMember from "./components/AddMember.js";
 import AddTraining from "./components/AddTraining.js";
 import MemberProfile from "./components/MemberProfile.js";
 import CreateAccount from "./components/CreateAccount.js";
+import TrainingProfile from "./components/TrainingProfile.js";
+import TrainingDue from "./components/TrainingDue.js";
 
 const App = () => {
   const initMemberParams = [
@@ -33,9 +35,12 @@ const App = () => {
   const [id, setId] = useState();
   const [search, setSearch] = useState("");
   const [training, setTraining] = useState();
-  const [state, setState] = useState();
+  const [person, setPerson] = useState();
+  const [trainingProfile, setTrainingProfile] = useState();
   const [memberParams, setMemberParams] = useState(initMemberParams);
   const [trainingParams, setTrainingParams] = useState(initTrainingParams);
+  const [users, setUsers] = useState();
+  const [currentUser, setCurrentUser] = useState();
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -43,6 +48,9 @@ const App = () => {
     fetch("http://localhost:8080/training")
       .then((response) => response.json())
       .then((data) => setTraining(data));
+    fetch("http://localhost:8080/users")
+      .then((response) => response.json())
+      .then((data) => setUsers(data));
   }, []);
 
   return (
@@ -51,10 +59,10 @@ const App = () => {
         value={{
           members,
           setMembers,
-          id,
-          setId,
-          state,
-          setState,
+          person,
+          setPerson,
+          trainingProfile,
+          setTrainingProfile,
           search,
           setSearch,
           training,
@@ -63,6 +71,10 @@ const App = () => {
           setMemberParams,
           trainingParams,
           setTrainingParams,
+          users,
+          setUsers,
+          currentUser,
+          setCurrentUser,
         }}
       >
         <Router>
@@ -73,7 +85,9 @@ const App = () => {
             <Route path="/all_members/:id" element={<MemberProfile />} />
             <Route path="/all_training" element={<AllTraining />} />
             <Route path="/add_training" element={<AddTraining />} />
+            <Route path="/all_training/:id" element={<TrainingProfile />} />
             <Route path="/create_account" element={<CreateAccount />} />
+            <Route path="/training_due" element={<TrainingDue />} />
           </Routes>
         </Router>
       </Context.Provider>

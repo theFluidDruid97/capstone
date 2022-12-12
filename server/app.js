@@ -38,9 +38,9 @@ app.post("/members", (req, res) => {
     .catch((err) => res.status(404).json(err));
 });
 
-app.delete("/members/:dod_id", (req, res) => {
+app.delete("/members/:id", (req, res) => {
   knex("members")
-    .where("dod_id", req.params.dod_id)
+    .where("id", req.params.id)
     .del()
     .then((member) => {
       member !== 0
@@ -71,6 +71,33 @@ app.delete("/training/:id", (req, res) => {
     .del()
     .then((training) => {
       training !== 0
+        ? res.status(201).send("Delete successful")
+        : res.status(404).send("Delete failed");
+    });
+});
+
+app.get("/users", (req, res) =>
+  knex("users")
+    .select("*")
+    .then((data) => res.status(200).json(data))
+);
+
+app.post("/users", (req, res) => {
+  knex("users")
+    .insert({
+      user_email: req.body.user_email,
+      user_password: req.body.user_password,
+    })
+    .then((data) => res.status(201).json(data))
+    .catch((err) => res.status(404).json(err));
+});
+
+app.delete("/users/:id", (req, res) => {
+  knex("users")
+    .where("id", req.params.id)
+    .del()
+    .then((user) => {
+      user !== 0
         ? res.status(201).send("Delete successful")
         : res.status(404).send("Delete failed");
     });

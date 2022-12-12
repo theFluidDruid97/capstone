@@ -52,7 +52,8 @@ const AddMember = () => {
   return (
     <div className="Body">
       <NavBarAdd />
-      <div className="AddMember member-table">
+      <div className="AddMember">
+        <div className="FormHeader">Add Member</div>
         <form onSubmit={handleSubmit}>
           <div className="form-group" onChange={(e) => setRank(e.target.value)}>
             <label htmlFor="rank">Rank</label>
@@ -103,7 +104,7 @@ const AddMember = () => {
             <input
               className="form-control bg-dark text-secondary"
               type="text"
-              placeholder="Enter Government E-Mail Address"
+              placeholder="Enter E-Mail Address"
             />
           </div>
           <div className="form-group" onChange={(e) => setUnit(e.target.value)}>

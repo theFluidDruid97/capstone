@@ -1,38 +1,76 @@
-import React, { useEffect, useState } from "react";
+import { Context } from "../App.js";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./CreateAccount.css";
 
 const CreateAccount = () => {
-  const [result, setResult] = useState();
-  useEffect(() => {
-    let array = [];
-    let keys = Object.keys(localStorage);
-    for (let i = 0; i < keys.length; i++) {
-      array.push(JSON.parse(localStorage.getItem(keys[i])));
+  const { users, setId } = useContext(Context);
+  const [message, setMessage] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+  const navigate = useNavigate();
+  let addSubmit = async (e) => {
+    try {
+      let res = await fetch("http://localhost:8080/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_email: userEmail,
+          user_password: userPassword,
+        }),
+      });
+      if (res.status === 200) {
+        setUserEmail("");
+        setUserPassword("");
+        setMessage("User created successfully");
+      } else {
+        setMessage("Some error occured");
+      }
+    } catch (err) {
+      console.log(err);
     }
-  });
-
+  };
   return (
-    <div className="accounts-container">
-      <div className="ltext">Accounts from jesse</div>
-      <ol className="ltext2">
-        {result?.map((r) => (
-          <li>{r.name}</li>
-        ))}
-        {console.log(result)}
-      </ol>
+    <div className="Body">
+      <div className="CreateAccount">
+        <div className="FormHeader">Create Account</div>
+        <form
+          onSubmit={() => {
+            addSubmit();
+            navigate("/");
+          }}
+        >
+          <div
+            className="form-group"
+            onChange={(e) => setUserEmail(e.target.value)}
+          >
+            <div className="form-label">E-Mail Address</div>
+            <input
+              className="form-control bg-dark text-secondary"
+              type="text"
+              placeholder="Enter E-Mail Address"
+            />
+          </div>
+          <div
+            className="form-group"
+            onChange={(e) => setUserPassword(e.target.value)}
+          >
+            <div className="form-label">Password</div>
+            <input
+              className="form-control bg-dark text-secondary"
+              type="text"
+              placeholder="Enter Password"
+            />
+          </div>
+          <button className="btn btn-secondary" type="submit">
+            Submit
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
 export default CreateAccount;
-// const Leaderboard = () => {
-// const [result, setResult] = useState([])
-
-//   useEffect(() => {
-//     let array = []
-//     let keys = Object.keys(localStorage)
-//     for (let i = 0; i < keys.length; i++) {
-//      array.push(JSON.parse(localStorage.getItem(keys[i])));
-//     }
-//     array.sort((a, b) => (a.avg > b.avg) ? -1 : 1)
-//     setResult(array)
-//   }, []);

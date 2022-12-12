@@ -6,6 +6,8 @@
 }
 
 .AllTraining {
+    color: rgba(255, 255, 255);
+    font-weight: bold;
     padding-top: 1%;
     padding-left: 1%;
     padding-right: 1%;
@@ -17,6 +19,12 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     border-radius: 20px;
+}
+
+.FormHeader{
+    font-size: x-large;
+    padding-bottom: 2%;
+    text-align: center;
 }
 
 .training-row:hover {

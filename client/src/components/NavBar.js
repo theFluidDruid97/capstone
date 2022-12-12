@@ -68,8 +68,8 @@ const NavBar = () => {
         <input
           className="form-control mr-sm-2 bg-dark text-secondary"
           type="search"
-          placeholder="Search"
-          aria-label="Search"
+          placeholder="Filter"
+          aria-label="Filter"
           onChange={(e) => handleChange(e)}
         />
       </form>
@@ -84,7 +84,7 @@ const NavBar = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Search By
+            Filter By
           </a>
           <div
             className="dropdown-menu bg-dark text-secondary"

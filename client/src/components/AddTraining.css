@@ -20,8 +20,10 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+    border-radius: 20px;
 }
 
-.member-table {
-    border-radius: 20px;
+.FormHeader{
+    font-size: x-large;
+    padding-bottom: 2%;
 }

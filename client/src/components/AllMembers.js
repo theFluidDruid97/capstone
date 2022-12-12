@@ -6,13 +6,18 @@ import NavBar from "./NavBar.js";
 import "./AllMembers.css";
 
 const AllMembers = () => {
-  const { search, members, id, setId, state, setState, memberParams } =
-    useContext(Context);
+  const { search, members, memberParams, currentUser } = useContext(Context);
   const navigate = useNavigate();
+  const handleClick = (e) => {
+    e.preventDefault();
+    console.log(e);
+  };
+  console.log(currentUser);
   return (
     <div className="Body">
       <NavBar />
       <div className="AllMembers">
+        <div className="FormHeader">All Members</div>
         <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>
@@ -155,8 +160,7 @@ const AllMembers = () => {
                   <tr
                     className="member-row"
                     onClick={() => {
-                      setId(item.id);
-                      navigate(`/all_members/:${item.id}`);
+                      navigate(`/all_members/${item.id}`);
                     }}
                     key={item.id}
                   >

@@ -8,10 +8,12 @@ import "./AllTraining.css";
 const AllTraining = () => {
   const { search, training, id, setId, trainingParams } = useContext(Context);
   const navigate = useNavigate();
+
   return (
     <div className="Body">
       <NavBarTraining />
       <div className="AllTraining">
+        <div className="FormHeader">All Training</div>
         <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>
@@ -65,8 +67,7 @@ const AllTraining = () => {
                   <tr
                     className="training-row"
                     onClick={() => {
-                      setId(item.id);
-                      navigate(`/all_training/:${item.id}`);
+                      navigate(`/all_training/${item.id}`);
                     }}
                     key={item.id}
                   >
