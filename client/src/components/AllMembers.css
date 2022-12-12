@@ -3,18 +3,22 @@
       rgba(253, 209, 141),
       rgba(78, 53, 21));
   min-height: 100vh;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white; */
 }
 
 .AllMembers {
+  padding-top: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: #212529;
   min-width: 70%;
   position: absolute;
   top: 55%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  border-radius: 20px;
+}
+
+.member-row:hover {
+  cursor: pointer;
 }

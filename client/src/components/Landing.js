@@ -1,5 +1,6 @@
 import "./Landing.css";
 import NavBar from "./NavBar.js";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -33,17 +34,25 @@ const Landing = () => {
           />
         </div>
         <p className="lead mt-5">
-          <a className="btn btn-success btn-lg" href="#" role="button">
-            SIGN IN
-          </a>
+          <Link to="/all_members">
+            <button className="btn btn-success btn-lg sign-in-button">
+              SIGN IN
+            </button>
+          </Link>
         </p>
         <p className="lead">
-          <a className="btn btn-secondary btn-lg" href="#" role="button">
-            CREATE ACCOUNT
-          </a>
+          <Link to="/create_account">
+            <button className="btn btn-secondary btn-lg sign-in-button">
+              CREATE ACCOUNT
+            </button>
+          </Link>
         </p>
         <p className="lead">
-          <a className="btn btn-primary btn-lg" href="#" role="button">
+          <a
+            className="btn btn-primary btn-lg sign-in-button"
+            href="#"
+            role="button"
+          >
             CAC SIGN IN
           </a>
         </p>

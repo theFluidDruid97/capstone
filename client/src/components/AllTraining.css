@@ -5,23 +5,20 @@
     min-height: 100vh;
 }
 
-.AddMember {
-    color: rgba(255, 255, 255);
-    font-weight: bold;
+.AllTraining {
     padding-top: 1%;
-    padding-bottom: 1%;
     padding-left: 1%;
     padding-right: 1%;
     background-color: #212529;
-    min-width: 30%;
+    min-width: 70%;
     position: absolute;
     top: 55%;
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    text-align: center;
+    border-radius: 20px;
 }
 
-.member-table {
-    border-radius: 20px;
+.training-row:hover {
+    cursor: pointer;
 }
