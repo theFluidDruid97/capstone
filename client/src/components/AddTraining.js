@@ -35,7 +35,8 @@ const AddTraining = () => {
   return (
     <div className="Body">
       <NavBarAdd />
-      <form className="AddTraining member-table" onSubmit={addSubmit}>
+      <form className="AddTraining" onSubmit={addSubmit}>
+        <div className="FormHeader">Add Training</div>
         <div
           className="form-group"
           onChange={(e) => setTraining_name(e.target.value)}
@@ -43,7 +44,7 @@ const AddTraining = () => {
           <div className="form-label">Name</div>
           <input
             className="form-control bg-dark text-secondary"
-            type="title"
+            type="text"
             placeholder="Enter Certification/Training Name"
           />
         </div>
@@ -54,7 +55,7 @@ const AddTraining = () => {
           <div className="form-label">Frequency</div>
           <input
             className="form-control bg-dark text-secondary"
-            type="frequency"
+            type="text"
             placeholder="Enter Certification/Training Frequency (In Months)"
           />
         </div>

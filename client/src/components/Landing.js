@@ -1,8 +1,20 @@
 import "./Landing.css";
 import NavBar from "./NavBar.js";
 import { Link } from "react-router-dom";
+import { Context } from "../App.js";
+import { useContext } from "react";
 
 const Landing = () => {
+  const { currentUser, setCurrentUser } = useContext(Context);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const signInInfo = {
+      user_email: e.target[0].value,
+      user_password: e.target[1].value,
+    };
+    setCurrentUser(signInInfo);
+    console.log(currentUser);
+  };
   return (
     <div className="landing">
       <div className="jumbotron bg-dark">
@@ -15,24 +27,41 @@ const Landing = () => {
             height="65"
           />
         </h1>
-        <div className="form-group landing-form">
-          <label htmlFor="email">E-Mail Address</label>
-          <input
-            type="email"
-            className="form-control bg-dark"
-            id="email"
-            placeholder="E-Mail Address"
-          />
-        </div>
-        <div className="form-group landing-form">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="form-control bg-dark"
-            id="password"
-            placeholder="Password"
-          />
-        </div>
+        <form onSubmit={(e) => handleSubmit(e)}>
+          <div className="form-group landing-form">
+            <label htmlFor="email">E-Mail Address</label>
+            <input
+              type="email"
+              className="form-control bg-dark text-secondary"
+              id="email"
+              placeholder="E-Mail Address"
+            />
+          </div>
+          <div className="form-group landing-form">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              className="form-control bg-dark text-secondary"
+              id="password"
+              placeholder="Password"
+            />
+          </div>
+          <Link
+            to={{
+              pathname: "/all_members",
+              state: {
+                currentUser: currentUser,
+              },
+            }}
+          >
+            <button
+              type="submit"
+              className="btn btn-success btn-lg sign-in-button"
+            >
+              TEST SIGN IN
+            </button>
+          </Link>
+        </form>
         <p className="lead mt-5">
           <Link to="/all_members">
             <button className="btn btn-success btn-lg sign-in-button">
@@ -47,6 +76,7 @@ const Landing = () => {
             </button>
           </Link>
         </p>
+        <p></p>
         <p className="lead">
           <a
             className="btn btn-primary btn-lg sign-in-button"
