@@ -1,0 +1,25 @@
+.Body {
+    background-image: linear-gradient(to bottom right,
+        rgba(253, 209, 141),
+        rgba(78, 53, 21));
+    min-height: 100vh;
+  }
+  
+.Home {
+  color: rgba(255, 255, 255);
+  font-weight: bold;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 1%;
+  padding-right: 1%;
+  background-color: #212529;
+  min-width: 85%;
+  min-height: 70%;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 20px;
+}

@@ -7,6 +7,8 @@ exports.up = function (knex) {
     table.increments("id");
     table.string("training_name");
     table.integer("cert_duration");
+    table.string("training_link", 500);
+    table.string("training_description", 500);
   });
 };
 

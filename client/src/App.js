@@ -10,7 +10,10 @@ import AddTraining from "./components/AddTraining.js";
 import MemberProfile from "./components/MemberProfile.js";
 import CreateAccount from "./components/CreateAccount.js";
 import TrainingProfile from "./components/TrainingProfile.js";
+import { Date } from "./components/Date.js";
 import TrainingDue from "./components/TrainingDue.js";
+import Home from "./components/Home.js";
+import UserProfile from "./components/UserProfile.js";
 
 const App = () => {
   const initMemberParams = [
@@ -87,7 +90,9 @@ const App = () => {
             <Route path="/add_training" element={<AddTraining />} />
             <Route path="/all_training/:id" element={<TrainingProfile />} />
             <Route path="/create_account" element={<CreateAccount />} />
-            <Route path="/training_due" element={<TrainingDue />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/user_profile" element={<UserProfile />} />
+            <Route path="/date" element={<Date />} />
           </Routes>
         </Router>
       </Context.Provider>

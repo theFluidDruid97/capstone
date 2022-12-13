@@ -1,6 +1,7 @@
 import { Context } from "../App.js";
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./NavBar.css";
 
 const NavBar = () => {
@@ -11,7 +12,10 @@ const NavBar = () => {
     setMemberParams,
     checked,
     setChecked,
+    currentUser,
+    setCurrentUser,
   } = useContext(Context);
+  const navigate = useNavigate();
   const handleChange = (e) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -23,9 +27,13 @@ const NavBar = () => {
     updatedMemberParams[0][e.target.id] = updatedMemberParam;
     setMemberParams(updatedMemberParams);
   };
+  const handleLogout = () => {
+    setCurrentUser();
+    navigate("/");
+  };
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
-      <a className="navbar-brand ml-5" href="/">
+      <a className="navbar-brand ml-5" href="/home">
         <img
           src="https://user-images.githubusercontent.com/111238515/206806904-bafeede1-58e5-4863-8004-9c5131a73ece.png"
           alt="TrainTrack Logo"
@@ -73,7 +81,7 @@ const NavBar = () => {
           onChange={(e) => handleChange(e)}
         />
       </form>
-      <ul className="navbar-nav mr-5">
+      <ul className="navbar-nav mr-2">
         <li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"
@@ -178,6 +186,37 @@ const NavBar = () => {
                 AFSC
               </label>
             </div>
+          </div>
+        </li>
+      </ul>
+      <ul className="navbar-nav mr-5">
+        <li className="nav-item dropdown">
+          <a
+            className="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Profile
+          </a>
+          <div
+            className="dropdown-menu ddm-2 bg-dark text-secondary"
+            aria-labelledby="navbarDropdown"
+          >
+            <Link to="/user_profile">
+              <button className="btn ddm-2-btn btn-outline-secondary ml-2">
+                View Profile
+              </button>
+            </Link>
+            <button
+              className="btn ddm-2-btn btn-outline-secondary ml-2 mt-2"
+              onClick={() => handleLogout()}
+            >
+              Logout
+            </button>
           </div>
         </li>
       </ul>

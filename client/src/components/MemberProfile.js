@@ -1,27 +1,84 @@
 import { Context } from "../App.js";
-import { useContext } from "react";
+import { useState, useContext, componentDidUpdate } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "./MemberProfile.css";
-// import Training from "./TrainingDummy.js";
+import JsPDF from "jspdf";
 import NavBarTraining from "./NavBarTraining.js";
 
 const MemberProfile = () => {
-  const { members, training, setTraining, person, setPerson } =
-    useContext(Context);
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const {
+    members,
+    training,
+    setTraining,
+    person,
+    setPerson,
+    search,
+    trainingParams,
+  } = useContext(Context);
   const urlID = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
   );
+  const generatePDF = () => {
+    const report = new JsPDF("a4");
+    report.html(document.querySelector("#PDF")).then(() => {
+      report.save("member.pdf");
+    });
+  };
   members?.find((item) => {
-    console.log(item.id);
     if (item.id == urlID) {
       setPerson(item);
     }
   });
+  const handleDeleteClick = async (e) => {
+    let res = await fetch(`http://localhost:8080/members/${urlID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (res.status === 200) {
+      setMessage("Member Deleted");
+    } else {
+      setMessage("Some error occured");
+    }
+    navigate("/all_members");
+    window.location.reload();
+  };
+  const handleEditClick = async (e) => {
+    // let res = await fetch(`http://localhost:8080/members/${urlID}`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // if (res.status === 200) {
+    //   setMessage("Member Deleted");
+    // } else {
+    //   setMessage("Some error occured");
+    // }
+    // // setTimeout(() => {
+    // //   console.log("Delayed for 1 second.");
+    // // }, 1000)
+    // // window.location.reload(true);
+    // navigate("/all_members");
+  };
 
   return (
     <div className="Body">
       <NavBarTraining />
-      <div className="Member">
-        <div>
+      <div className="Member" id="PDF">
+        <button
+          className="btn btn-secondary mb-3"
+          onClick={() => {
+            generatePDF();
+          }}
+          type="button"
+        >
+          Export PDF
+        </button>
+        <div id="PDF">
           <table className="table table-dark table-striped table-hover">
             <thead>
               <tr>
@@ -49,7 +106,7 @@ const MemberProfile = () => {
             </tbody>
           </table>
         </div>
-        <div>
+        <div id="PDF2">
           <table className="table table-dark table-striped table-hover">
             <thead>
               <tr>
@@ -57,17 +114,69 @@ const MemberProfile = () => {
                 <th>Certification Duration</th>
               </tr>
             </thead>
-            {training?.map((item) => {
-              return (
-                <tbody>
-                  <tr key={item.id}>
-                    <td>{item.training_name}</td>
-                    <td>{item.cert_duration}</td>
-                  </tr>
-                </tbody>
-              );
-            })}
+            {training
+              ?.filter((training) => {
+                if (trainingParams[0].training_name === true) {
+                  if (search === "") {
+                    return training;
+                  } else if (
+                    training.training_name
+                      .toLowerCase()
+                      .includes(search.toLowerCase())
+                  ) {
+                    return training;
+                  }
+                }
+                if (trainingParams[0].cert_duration === true) {
+                  if (search === "") {
+                    return training;
+                  } else if (
+                    training.cert_duration.toString().includes(search)
+                  ) {
+                    return training;
+                  }
+                }
+                if (
+                  (trainingParams[0].training_name === true &&
+                    trainingParams[0].cert_duration === true) ||
+                  (trainingParams[0].training_name === false &&
+                    trainingParams[0].cert_duration === false)
+                ) {
+                  if (search === "") {
+                    return training;
+                  } else if (
+                    training.training_name
+                      .toLowerCase()
+                      .includes(search.toLowerCase()) ||
+                    training.cert_duration.toString().includes(search)
+                  ) {
+                    return training;
+                  }
+                }
+              })
+              .map((item) => {
+                return (
+                  <tbody>
+                    <tr key={item.id}>
+                      <td>{item.training_name}</td>
+                      <td>{item.cert_duration}</td>
+                    </tr>
+                  </tbody>
+                );
+              })}
           </table>
+          <button className="btn btn-secondary" onClick={handleEditClick}>
+            Edit Member
+          </button>
+          <button
+            className="btn btn-secondary ml-3"
+            onClick={handleDeleteClick}
+          >
+            Delete Member
+          </button>
+          <button className="btn btn-secondary ml-3" type="button">
+            Assign Training
+          </button>
         </div>
       </div>
     </div>
