@@ -49,6 +49,17 @@ app.delete("/members/:id", (req, res) => {
     });
 });
 
+app.put("/members/:id", async (req, res) => {
+  knex("members")
+    .where("id", req.params.id)
+    .update(req.body)
+    .then((member) => {
+      member !== 0
+        ? res.status(201).send("Update successful")
+        : res.status(404).send("Update failed");
+    });
+});
+
 app.get("/training", (req, res) =>
   knex("training")
     .select("*")
@@ -60,6 +71,8 @@ app.post("/training", (req, res) => {
     .insert({
       training_name: req.body.training_name,
       cert_duration: req.body.cert_duration,
+      training_link: req.body.training_link,
+      training_description: req.body.training_description,
     })
     .then((data) => res.status(201).json(data))
     .catch((err) => res.status(404).json(err));
@@ -73,6 +86,17 @@ app.delete("/training/:id", (req, res) => {
       training !== 0
         ? res.status(201).send("Delete successful")
         : res.status(404).send("Delete failed");
+    });
+});
+
+app.put("/training/:id", async (req, res) => {
+  knex("training")
+    .where("id", req.params.id)
+    .update(req.body)
+    .then((training) => {
+      training !== 0
+        ? res.status(201).send("Update successful")
+        : res.status(404).send("Update failed");
     });
 });
 
@@ -100,6 +124,17 @@ app.delete("/users/:id", (req, res) => {
       user !== 0
         ? res.status(201).send("Delete successful")
         : res.status(404).send("Delete failed");
+    });
+});
+
+app.put("/users/:id", async (req, res) => {
+  knex("users")
+    .where("id", req.params.id)
+    .update(req.body)
+    .then((user) => {
+      user !== 0
+        ? res.status(201).send("Update successful")
+        : res.status(404).send("Update failed");
     });
 });
 

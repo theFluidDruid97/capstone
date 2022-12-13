@@ -3,6 +3,15 @@
     top: 57px
 }
 
+.ddm-2 {
+    left: -3rem !important;
+    top: 57px;
+}
+
+.ddm-2-btn {
+    width: 140px;
+}
+
 .nav-btn {
     max-width: 150px;
 }

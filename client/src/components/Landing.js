@@ -3,17 +3,30 @@ import NavBar from "./NavBar.js";
 import { Link } from "react-router-dom";
 import { Context } from "../App.js";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
-  const { currentUser, setCurrentUser } = useContext(Context);
+  const { users, currentUser, setCurrentUser } = useContext(Context);
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const signInInfo = {
       user_email: e.target[0].value,
       user_password: e.target[1].value,
     };
-    setCurrentUser(signInInfo);
-    console.log(currentUser);
+    const found = users.find(
+      (user) => signInInfo.user_email === user.user_email
+    );
+    let correctPass = false;
+    if (found.user_password === signInInfo.user_password) {
+      correctPass = true;
+    }
+    if (correctPass) {
+      setCurrentUser(found);
+      navigate("/home");
+    } else {
+      alert("INCORRECT PASSWORD");
+    }
   };
   return (
     <div className="landing">
@@ -46,29 +59,15 @@ const Landing = () => {
               placeholder="Password"
             />
           </div>
-          <Link
-            to={{
-              pathname: "/all_members",
-              state: {
-                currentUser: currentUser,
-              },
-            }}
-          >
+          <p className="mt-5">
             <button
               type="submit"
               className="btn btn-success btn-lg sign-in-button"
             >
-              TEST SIGN IN
-            </button>
-          </Link>
-        </form>
-        <p className="lead mt-5">
-          <Link to="/all_members">
-            <button className="btn btn-success btn-lg sign-in-button">
               SIGN IN
             </button>
-          </Link>
-        </p>
+          </p>
+        </form>
         <p className="lead">
           <Link to="/create_account">
             <button className="btn btn-secondary btn-lg sign-in-button">

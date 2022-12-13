@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../App.js";
 import NavBar from "./NavBar.js";
@@ -12,7 +12,7 @@ const AllMembers = () => {
     e.preventDefault();
     console.log(e);
   };
-  console.log(currentUser);
+  useEffect(() => {}, [members]);
   return (
     <div className="Body">
       <NavBar />

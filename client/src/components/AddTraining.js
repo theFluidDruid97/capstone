@@ -5,6 +5,8 @@ import "./AddTraining.css";
 const AddTraining = () => {
   const [training_name, setTraining_name] = useState("");
   const [cert_duration, setCert_duration] = useState("");
+  const [training_link, setTraining_link] = useState("");
+  const [training_description, setTraining_description] = useState("");
   const [message, setMessage] = useState("");
 
   let addSubmit = async (e) => {
@@ -18,11 +20,15 @@ const AddTraining = () => {
         body: JSON.stringify({
           training_name: training_name,
           cert_duration: cert_duration,
+          training_link: training_link,
+          training_description: training_description,
         }),
       });
       if (res.status === 200) {
         setTraining_name("");
         setCert_duration("");
+        setTraining_link("");
+        setTraining_description("");
         setMessage("User created successfully");
       } else {
         setMessage("Some error occured");
@@ -52,13 +58,40 @@ const AddTraining = () => {
           className="form-group"
           onChange={(e) => setCert_duration(e.target.value)}
         >
-          <div className="form-label">Frequency</div>
+          <div className="form-label">Certification/Training Duration</div>
           <input
             className="form-control bg-dark text-secondary"
             type="text"
             placeholder="Enter Certification/Training Frequency (In Months)"
           />
         </div>
+
+        <div
+          className="form-group"
+          onChange={(e) => setTraining_link(e.target.value)}
+        >
+          <div className="form-label">Training Link</div>
+          <input
+            className="form-control bg-dark text-secondary"
+            type="text"
+            placeholder="Enter Certification/Training Link"
+            maxLength="250"
+          />
+        </div>
+
+        <div
+          className="form-group"
+          onChange={(e) => setTraining_description(e.target.value)}
+        >
+          <div className="form-label">Training Description</div>
+          <input
+            className="form-control bg-dark text-secondary"
+            type="text"
+            placeholder="Enter Certification/Training Description"
+            maxLength="250"
+          />
+        </div>
+
         <button className="btn btn-secondary" type="submit">
           Submit
         </button>
