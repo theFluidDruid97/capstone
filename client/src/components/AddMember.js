@@ -58,7 +58,7 @@ const AddMember = () => {
           <div className="form-group" onChange={(e) => setRank(e.target.value)}>
             <label htmlFor="rank">Rank</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter Rank"
             />
@@ -69,7 +69,7 @@ const AddMember = () => {
           >
             <label htmlFor="last_name">Last Name</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter Last Name"
             />
@@ -80,7 +80,7 @@ const AddMember = () => {
           >
             <label htmlFor="first_name">First Name</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter First Name"
             />
@@ -91,7 +91,7 @@ const AddMember = () => {
           >
             <label htmlFor="dod_id">DoD ID #</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter DoD ID #"
             />
@@ -102,7 +102,7 @@ const AddMember = () => {
           >
             <label htmlFor="email">E-Mail Address</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter E-Mail Address"
             />
@@ -110,7 +110,7 @@ const AddMember = () => {
           <div className="form-group" onChange={(e) => setUnit(e.target.value)}>
             <label htmlFor="unit">Unit</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter Unit"
             />
@@ -121,7 +121,7 @@ const AddMember = () => {
           >
             <label htmlFor="office_symbol">Office Symbol</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter Office Symbol"
             />
@@ -129,7 +129,7 @@ const AddMember = () => {
           <div className="form-group" onChange={(e) => setAfsc(e.target.value)}>
             <label htmlFor="afsc">AFSC</label>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-secondary text-white"
               type="text"
               placeholder="Enter AFSC"
             />

@@ -5,7 +5,6 @@ import { Context } from "../App.js";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 const Training = () => {
-  const [message, setMessage] = useState("");
   const urlID = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
   );
@@ -36,11 +35,6 @@ const Training = () => {
         "Content-Type": "application/json",
       },
     });
-    if (res.status === 200) {
-      setMessage("Training Deleted");
-    } else {
-      setMessage("Some error occured");
-    }
     navigate("/all_training");
     window.location.reload();
   };
@@ -87,7 +81,7 @@ const Training = () => {
           <tbody>
             <tr key={trainingProfile?.id}>
               <input
-                className="form-control bg-dark text-white"
+                className="form-control bg-dark text-white border-0"
                 type="text"
                 placeholder={trainingProfile?.training_name}
               />
@@ -106,7 +100,7 @@ const Training = () => {
           <tbody>
             <tr key={trainingProfile?.id}>
               <input
-                className="form-control bg-dark text-white"
+                className="form-control bg-dark text-white border-0"
                 type="text"
                 placeholder={trainingProfile?.cert_duration}
               />
@@ -125,7 +119,7 @@ const Training = () => {
           <tbody>
             <tr key={trainingProfile?.id}>
               <input
-                className="form-control bg-dark text-white"
+                className="form-control bg-dark text-white border-0"
                 type="text"
                 placeholder={trainingProfile?.training_link}
               />
@@ -133,7 +127,7 @@ const Training = () => {
           </tbody>
         </table>
         <table
-          className="table table-dark table-striped table-hover table-editable"
+          className="table table-dark table-striped table-hover"
           onChange={(e) => setTraining_description(e.target.value)}
         >
           <thead>
@@ -144,7 +138,7 @@ const Training = () => {
           <tbody>
             <tr key={trainingProfile?.id}>
               <input
-                className="form-control bg-dark text-white"
+                className="form-control bg-dark text-white border-0"
                 type="text"
                 placeholder={trainingProfile?.training_description}
               />

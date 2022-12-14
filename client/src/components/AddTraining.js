@@ -49,7 +49,7 @@ const AddTraining = () => {
         >
           <div className="form-label">Name</div>
           <input
-            className="form-control bg-dark text-secondary"
+            className="form-control bg-dark text-secondary text-white"
             type="text"
             placeholder="Enter Certification/Training Name"
           />
@@ -60,7 +60,7 @@ const AddTraining = () => {
         >
           <div className="form-label">Certification/Training Duration</div>
           <input
-            className="form-control bg-dark text-secondary"
+            className="form-control bg-dark text-secondary text-white"
             type="text"
             placeholder="Enter Certification/Training Frequency (In Months)"
           />
@@ -72,7 +72,7 @@ const AddTraining = () => {
         >
           <div className="form-label">Training Link</div>
           <input
-            className="form-control bg-dark text-secondary"
+            className="form-control bg-dark text-secondary text-white"
             type="text"
             placeholder="Enter Certification/Training Link"
             maxLength="250"
@@ -85,7 +85,7 @@ const AddTraining = () => {
         >
           <div className="form-label">Training Description</div>
           <input
-            className="form-control bg-dark text-secondary"
+            className="form-control bg-dark text-secondary text-white"
             type="text"
             placeholder="Enter Certification/Training Description"
             maxLength="250"
