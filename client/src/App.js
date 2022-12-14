@@ -11,7 +11,6 @@ import MemberProfile from "./components/MemberProfile.js";
 import CreateAccount from "./components/CreateAccount.js";
 import TrainingProfile from "./components/TrainingProfile.js";
 import { Date } from "./components/Date.js";
-import TrainingDue from "./components/TrainingDue.js";
 import Home from "./components/Home.js";
 import UserProfile from "./components/UserProfile.js";
 
@@ -44,6 +43,7 @@ const App = () => {
   const [trainingParams, setTrainingParams] = useState(initTrainingParams);
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
+  const [memberTraining, setMemberTraining] = useState();
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -78,6 +78,8 @@ const App = () => {
           setUsers,
           currentUser,
           setCurrentUser,
+          memberTraining,
+          setMemberTraining,
         }}
       >
         <Router>
