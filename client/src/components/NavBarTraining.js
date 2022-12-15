@@ -13,6 +13,7 @@ const NavBarTraining = () => {
     checked,
     setChecked,
     setCurrentUser,
+    cookies,
   } = useContext(Context);
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -126,6 +127,7 @@ const NavBarTraining = () => {
           </div>
         </li>
       </ul>
+      <div className="text-white">Logged in as:</div>
       <ul className="navbar-nav mr-5">
         <li className="nav-item dropdown">
           <a
@@ -137,7 +139,7 @@ const NavBarTraining = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Profile
+            {cookies.user_email}
           </a>
           <div
             className="dropdown-menu ddm-2 bg-dark text-secondary"

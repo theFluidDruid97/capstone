@@ -25,3 +25,26 @@
 .form-control:valid {
   background-color:  transparent !important;
 }
+
+.ddm-3 {
+  left: -3px !important;
+  margin-top: 50px;
+}
+
+.align-middle {
+  vertical-align: center !important;
+  font-weight:normal;
+}
+
+.RemoveTraining{
+  padding-left: 1%;
+}
+
+.input-group{
+  width: 50% !important;
+}
+
+.completion{
+  /* width: 750px !important; */
+  width: auto !important;
+}

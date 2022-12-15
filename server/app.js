@@ -3,7 +3,7 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 8080;
 const bcrypt = require("bcrypt");
-const { hash } = bcrypt;
+const { hash, compare } = bcrypt;
 const corsOptions = {
   origin: "*",
   credentials: true,
@@ -150,9 +150,8 @@ app.get("/member_training/:id", (req, res) => {
     .join("training", "training.id", "member_training.training_id")
     .select(
       "member_training.record_id",
-      "members.last_name",
-      "members.first_name",
       "training.training_name",
+      "training.cert_duration",
       "member_training.completion_date"
     )
     .then((records) => {
@@ -193,6 +192,23 @@ app.put("/member_training/:id", async (req, res) => {
       member_training !== 0
         ? res.status(201).send("Update successful")
         : res.status(404).send("Update failed");
+    });
+});
+
+app.post("/login", (req, res) => {
+  knex("users")
+    .where("users.user_email", req.body.user_email)
+    .select("user_password")
+    .then((data) => {
+      bcrypt
+        .compare(req.body.user_password, data[0].user_password)
+        .then(function (data) {
+          if (data == false) {
+            res.status(400).send("INVALID PASSWORD");
+          } else {
+            res.status(200).send("MATCH");
+          }
+        });
     });
 });
 

@@ -10,9 +10,9 @@ import AddTraining from "./components/AddTraining.js";
 import MemberProfile from "./components/MemberProfile.js";
 import CreateAccount from "./components/CreateAccount.js";
 import TrainingProfile from "./components/TrainingProfile.js";
-import { Date } from "./components/Date.js";
 import Home from "./components/Home.js";
 import UserProfile from "./components/UserProfile.js";
+import cookie from "cookie";
 
 const App = () => {
   const initMemberParams = [
@@ -33,6 +33,7 @@ const App = () => {
       cert_duration: false,
     },
   ];
+  const cookies = cookie.parse(document.cookie);
   const [members, setMembers] = useState();
   const [id, setId] = useState();
   const [search, setSearch] = useState("");
@@ -44,6 +45,7 @@ const App = () => {
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [memberTraining, setMemberTraining] = useState();
+  const [completion_date, setCompletion_date] = useState("");
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -60,6 +62,7 @@ const App = () => {
     <div className="App">
       <Context.Provider
         value={{
+          cookies,
           members,
           setMembers,
           person,
@@ -80,6 +83,8 @@ const App = () => {
           setCurrentUser,
           memberTraining,
           setMemberTraining,
+          completion_date,
+          setCompletion_date,
         }}
       >
         <Router>
@@ -94,7 +99,6 @@ const App = () => {
             <Route path="/create_account" element={<CreateAccount />} />
             <Route path="/home" element={<Home />} />
             <Route path="/user_profile" element={<UserProfile />} />
-            <Route path="/date" element={<Date />} />
           </Routes>
         </Router>
       </Context.Provider>

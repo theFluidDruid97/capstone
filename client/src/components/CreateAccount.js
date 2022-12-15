@@ -9,9 +9,9 @@ const CreateAccount = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const navigate = useNavigate();
-  let addSubmit = async (e) => {
+  const submit = async (e) => {
     try {
-      let res = await fetch("http://localhost:8080/users", {
+      const res = await fetch("http://localhost:8080/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,13 +21,6 @@ const CreateAccount = () => {
           user_password: userPassword,
         }),
       });
-      if (res.status === 200) {
-        setUserEmail("");
-        setUserPassword("");
-        setMessage("User created successfully");
-      } else {
-        setMessage("Some error occured");
-      }
     } catch (err) {
       console.log(err);
     }
@@ -38,7 +31,7 @@ const CreateAccount = () => {
         <div className="FormHeader">Create Account</div>
         <form
           onSubmit={() => {
-            addSubmit();
+            submit();
             navigate("/");
           }}
         >

@@ -13,6 +13,7 @@ const NavBarAdd = () => {
     checked,
     setChecked,
     setCurrentUser,
+    cookies,
   } = useContext(Context);
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -71,7 +72,9 @@ const NavBarAdd = () => {
           Add Training
         </button>
       </Link>
-      <ul className="navbar-nav ml-auto mr-5">
+
+      <div className="text-white ml-auto">Logged in as:</div>
+      <ul className="navbar-nav mr-5">
         <li className="nav-item dropdown">
           <a
             className="nav-link dropdown-toggle"
@@ -82,7 +85,7 @@ const NavBarAdd = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Profile
+            {cookies.user_email}
           </a>
           <div
             className="dropdown-menu ddm-2 bg-dark text-secondary"

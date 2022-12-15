@@ -4,8 +4,9 @@
 }
 
 .ddm-2 {
-    left: -3rem !important;
+    left: 0px !important;
     top: 57px;
+    max-width: 140px;
 }
 
 .ddm-2-btn {

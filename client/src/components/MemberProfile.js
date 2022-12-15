@@ -5,8 +5,9 @@ import "./MemberProfile.css";
 import JsPDF from "jspdf";
 import NavBarTraining from "./NavBarTraining.js";
 
+const { DateTime } = require("luxon");
+
 const MemberProfile = () => {
-  const [record_id, setRecord_id] = useState("");
   const {
     members,
     training,
@@ -17,6 +18,8 @@ const MemberProfile = () => {
     trainingParams,
     memberTraining,
     setMemberTraining,
+    completion_date,
+    setCompletion_date,
   } = useContext(Context);
   const urlID = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
@@ -26,7 +29,7 @@ const MemberProfile = () => {
       setPerson(item);
     }
   });
-
+  const [record_id, setRecord_id] = useState("");
   const navigate = useNavigate();
   const [dod_id, setDod_id] = useState("");
   const [rank, setRank] = useState("");
@@ -36,7 +39,14 @@ const MemberProfile = () => {
   const [unit, setUnit] = useState("");
   const [office_symbol, setOffice_symbol] = useState("");
   const [afsc, setAfsc] = useState("");
-  const [completion_date, setCompletion_date] = useState("");
+  const [due_date, setDue_date] = useState();
+
+  const Date = (dt, m) => {
+    const date = DateTime.fromFormat(dt, "yyyy-MM-dd")
+      .plus({ months: m })
+      .toFormat("yyyy-MM-dd");
+    return date;
+  };
 
   const generatePDF = () => {
     const report = new JsPDF("a4");
@@ -48,11 +58,15 @@ const MemberProfile = () => {
   useEffect(() => {
     fetch(`http://localhost:8080/member_training/${urlID}`)
       .then((response) => response.json())
-      .then((data) => setMemberTraining(data));
-  }, []);
-
-  console.log(memberTraining);
-
+      .then((data) => {
+        setMemberTraining(data);
+      });
+    fetch(`http://localhost:8080/training`)
+      .then((response) => response.json())
+      .then((data) => {
+        setTraining(data);
+      });
+  }, [person]);
   const handleDeleteClick = async (e) => {
     let res = await fetch(`http://localhost:8080/members/${urlID}`, {
       method: "DELETE",
@@ -107,6 +121,39 @@ const MemberProfile = () => {
     window.location.reload();
   };
 
+  const handleAssignTrainingClick = async (e, item) => {
+    e.preventDefault();
+    try {
+      let res = await fetch(`http://localhost:8080/member_training/${urlID}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          training_id: item.id,
+          completion_date: "NOT COMPLETE",
+          cert_duration: item.cert_duration,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    window.location.reload();
+  };
+
+  const handleRemoveTrainingClick = async (e, item) => {
+    let res = await fetch(`http://localhost:8080/member_training/${urlID}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        record_id: item.record_id,
+      }),
+    });
+    window.location.reload();
+  };
+
   const handleTrainingClick = () => {};
   useEffect(() => {
     setDod_id(person?.dod_id);
@@ -131,6 +178,18 @@ const MemberProfile = () => {
           type="button"
         >
           Export PDF
+        </button>
+        <button
+          className="btn btn-secondary mb-3 ml-3"
+          onClick={() => handleEditClick()}
+        >
+          Submit Member Edit(s)
+        </button>
+        <button
+          className="btn btn-danger mb-3 ml-3"
+          onClick={() => handleDeleteClick()}
+        >
+          Delete Member
         </button>
         <div>
           <table className="table table-dark table-striped table-hover">
@@ -220,7 +279,8 @@ const MemberProfile = () => {
             <thead>
               <tr key={person?.id}>
                 <th>Training Name</th>
-                <th>Completion Date</th>
+                <th>Expiration Date</th>
+                <th className="completion">Completion Date</th>
               </tr>
             </thead>
             <tbody>
@@ -267,13 +327,18 @@ const MemberProfile = () => {
                 ?.map((item) => {
                   return (
                     <tr key={item.id}>
-                      <td>{item.training_name}</td>
+                      <td className="align-middle">{item.training_name}</td>
+                      <td className="align-middle">
+                        {Date(item.completion_date, item.cert_duration)}
+                      </td>
                       <td className="input-group">
                         <input
                           className="form-control bg-dark text-white border-0"
                           type="text"
                           placeholder={item.completion_date}
-                          onChange={(e) => setCompletion_date(e.target.value)}
+                          onChange={(e) => {
+                            setCompletion_date(e.target.value);
+                          }}
                         />
                         <button
                           className="btn btn-secondary"
@@ -284,6 +349,15 @@ const MemberProfile = () => {
                         >
                           Submit Date
                         </button>
+                        <button
+                          className="RemoveTraining btn btn-danger"
+                          onClick={(e) => {
+                            handleRemoveTrainingClick(e, item);
+                          }}
+                          type="button"
+                        >
+                          Remove Training
+                        </button>
                       </td>
                     </tr>
                   );
@@ -292,37 +366,28 @@ const MemberProfile = () => {
           </table>
           <div className="dropdown">
             <button
-              className="btn btn-secondary"
-              onClick={() => handleEditClick()}
-            >
-              Submit Member Edit(s)
-            </button>
-            <button
-              className="btn btn-secondary ml-3"
-              onClick={() => handleDeleteClick()}
-            >
-              Delete Member
-            </button>
-
-            <button
-              className="btn btn-secondary dropdown-toggle ml-3"
+              className="btn btn-secondary dropdown-toggle"
               type="button"
               id="dropdownMenuButton"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Register Completed Training
+              Assign Training
             </button>
             <div
-              className="dropdown-menu bg-secondary"
+              className="dropdown-menu ddm-3 bg-secondary"
               aria-labelledby="dropdownMenuButton"
             >
               {training?.map((item) => {
                 return (
-                  <div className="dropdown-item" key={item.id}>
+                  <button
+                    onClick={(e) => handleAssignTrainingClick(e, item)}
+                    className="dropdown-item btn btn-secondary"
+                    key={item.id}
+                  >
                     {item.training_name}
-                  </div>
+                  </button>
                 );
               })}
             </div>

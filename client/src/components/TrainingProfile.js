@@ -148,14 +148,14 @@ const Training = () => {
         <button className="btn btn-secondary" onClick={handleEditClick}>
           Submit Training Edit(s)
         </button>
-        <button className="btn btn-secondary ml-3" onClick={handleDeleteClick}>
-          Delete Training
-        </button>
         <a href={trainingProfile?.training_link} target="_blank">
           <button className="btn btn-secondary ml-3">
             Go To Training Link
           </button>
         </a>
+        <button className="btn btn-danger ml-3" onClick={handleDeleteClick}>
+          Delete Training
+        </button>
       </div>
     </div>
   );
