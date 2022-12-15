@@ -6,26 +6,32 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
-  const { users, currentUser, setCurrentUser } = useContext(Context);
+  const { cookies, users, currentUser, setCurrentUser } = useContext(Context);
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const signInInfo = {
-      user_email: e.target[0].value,
-      user_password: e.target[1].value,
-    };
-    const found = users.find(
-      (user) => signInInfo.user_email === user.user_email
-    );
-    let correctPass = false;
-    if (found.user_password === signInInfo.user_password) {
-      correctPass = true;
-    }
-    if (correctPass) {
-      setCurrentUser(found);
-      navigate("/home");
-    } else {
-      alert("INCORRECT PASSWORD");
+    try {
+      const res = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_email: e.target[0].value,
+          user_password: e.target[1].value,
+        }),
+      });
+      if (res.status === 200) {
+        let user = users?.find((user) => user.user_email == e.target[0].value);
+        document.cookie = `user_id=${user.id}`;
+        document.cookie = `user_email=${user.user_email}`;
+        navigate("/home");
+        window.location.reload();
+      } else {
+        console.log("Some error occured");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   return (

@@ -6,6 +6,7 @@ import "./NavBar.css";
 
 const NavBar = () => {
   const {
+    cookies,
     search,
     setSearch,
     memberParams,
@@ -14,6 +15,7 @@ const NavBar = () => {
     setChecked,
     currentUser,
     setCurrentUser,
+    users,
   } = useContext(Context);
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -189,6 +191,7 @@ const NavBar = () => {
           </div>
         </li>
       </ul>
+      <div className="text-white">Logged in as:</div>
       <ul className="navbar-nav mr-5">
         <li className="nav-item dropdown">
           <a
@@ -200,7 +203,7 @@ const NavBar = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Profile
+            {cookies.user_email}
           </a>
           <div
             className="dropdown-menu ddm-2 bg-dark text-secondary"
