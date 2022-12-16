@@ -33,6 +33,7 @@ const CreateAccount = () => {
           onSubmit={() => {
             submit();
             navigate("/");
+            window.location.reload();
           }}
         >
           <div

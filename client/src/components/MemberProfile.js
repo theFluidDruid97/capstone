@@ -2,10 +2,10 @@ import { Context } from "../App.js";
 import { useState, useContext, componentDidUpdate, useEffect } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./MemberProfile.css";
-import JsPDF from "jspdf";
-import NavBarTraining from "./NavBarTraining.js";
-
-const { DateTime } = require("luxon");
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import NavBarMemberProfile from "./NavBarMemberProfile.js";
+import { DateTime } from "luxon";
 
 const MemberProfile = () => {
   const {
@@ -20,6 +20,26 @@ const MemberProfile = () => {
     setMemberTraining,
     completion_date,
     setCompletion_date,
+    record_id,
+    setRecord_id,
+    dod_id,
+    setDod_id,
+    rank,
+    setRank,
+    last_name,
+    setLast_name,
+    first_name,
+    setFirst_name,
+    email,
+    setEmail,
+    unit,
+    setUnit,
+    office_symbol,
+    setOffice_symbol,
+    afsc,
+    setAfsc,
+    due_date,
+    setDue_date,
   } = useContext(Context);
   const urlID = window.location.pathname.substring(
     window.location.pathname.lastIndexOf("/") + 1
@@ -29,32 +49,7 @@ const MemberProfile = () => {
       setPerson(item);
     }
   });
-  const [record_id, setRecord_id] = useState("");
   const navigate = useNavigate();
-  const [dod_id, setDod_id] = useState("");
-  const [rank, setRank] = useState("");
-  const [last_name, setLast_name] = useState("");
-  const [first_name, setFirst_name] = useState("");
-  const [email, setEmail] = useState("");
-  const [unit, setUnit] = useState("");
-  const [office_symbol, setOffice_symbol] = useState("");
-  const [afsc, setAfsc] = useState("");
-  const [due_date, setDue_date] = useState();
-
-  const Date = (dt, m) => {
-    const date = DateTime.fromFormat(dt, "yyyy-MM-dd")
-      .plus({ months: m })
-      .toFormat("yyyy-MM-dd");
-    return date;
-  };
-
-  const generatePDF = () => {
-    const report = new JsPDF("a4");
-    report.html(document.querySelector("#PDF")).then(() => {
-      report.save("member.pdf");
-    });
-  };
-
   useEffect(() => {
     fetch(`http://localhost:8080/member_training/${urlID}`)
       .then((response) => response.json())
@@ -66,7 +61,38 @@ const MemberProfile = () => {
       .then((data) => {
         setTraining(data);
       });
+    setDod_id(person?.dod_id);
+    setRank(person?.rank);
+    setLast_name(person?.last_name);
+    setFirst_name(person?.first_name);
+    setEmail(person?.email);
+    setUnit(person?.unit);
+    setOffice_symbol(person?.office_symbol);
+    setAfsc(person?.afsc);
   }, [person]);
+  const CurrentDate = (item) => {
+    let d1 = DateTime.now().toISO();
+    let d2 = DateTime.fromFormat(`${item?.completion_date}`, "yyyy-MM-dd")
+      .plus({ months: `${item?.cert_duration}` })
+      .toISO();
+    let d3 = DateTime.fromFormat(`${item?.completion_date}`, "yyyy-MM-dd")
+      .plus({ months: `${item?.cert_duration}` })
+      .minus({ months: 2 })
+      .toISO();
+    if (d1 > d2) {
+      return "Over Due";
+    } else if (d1 > d3 && d1 < d2) {
+      return "Due Within 60 Days";
+    } else {
+      return "Current";
+    }
+  };
+  const Date = (dt, m) => {
+    const date = DateTime.fromFormat(dt, "yyyy-MM-dd")
+      .plus({ months: m })
+      .toFormat("yyyy-MM-dd");
+    return date;
+  };
   const handleDeleteClick = async (e) => {
     let res = await fetch(`http://localhost:8080/members/${urlID}`, {
       method: "DELETE",
@@ -77,9 +103,7 @@ const MemberProfile = () => {
     navigate("/all_members");
     window.location.reload();
   };
-
   const handleEditClick = async (e) => {
-    // e.preventDefault(); //Used to test network. Will prevent page refresh.
     try {
       let res = await fetch(`http://localhost:8080/members/${urlID}`, {
         method: "PUT",
@@ -102,7 +126,6 @@ const MemberProfile = () => {
     }
     window.location.reload();
   };
-
   const handleCompletionClick = async (e, item) => {
     try {
       let res = await fetch(`http://localhost:8080/member_training/${urlID}`, {
@@ -120,7 +143,6 @@ const MemberProfile = () => {
     }
     window.location.reload();
   };
-
   const handleAssignTrainingClick = async (e, item) => {
     e.preventDefault();
     try {
@@ -140,7 +162,6 @@ const MemberProfile = () => {
     }
     window.location.reload();
   };
-
   const handleRemoveTrainingClick = async (e, item) => {
     let res = await fetch(`http://localhost:8080/member_training/${urlID}`, {
       method: "DELETE",
@@ -153,22 +174,42 @@ const MemberProfile = () => {
     });
     window.location.reload();
   };
-
-  const handleTrainingClick = () => {};
-  useEffect(() => {
-    setDod_id(person?.dod_id);
-    setRank(person?.rank);
-    setLast_name(person?.last_name);
-    setFirst_name(person?.first_name);
-    setEmail(person?.email);
-    setUnit(person?.unit);
-    setOffice_symbol(person?.office_symbol);
-    setAfsc(person?.afsc);
-  }, [person]);
+  const generatePDF = () => {
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "portrait";
+    const marginLeft = 40;
+    const title =
+      person.last_name + ", " + person.first_name + " Training Report";
+    const headers = [
+      ["Status", "Training Name", "Expiration Date", "Completion Date"],
+    ];
+    const data = memberTraining?.map((training) => [
+      CurrentDate(training),
+      training.training_name,
+      Date(training.completion_date, training.cert_duration),
+      training.completion_date,
+    ]);
+    const content = {
+      startY: 50,
+      head: headers,
+      body: data,
+    };
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
+    doc.autoTable(content);
+    const string = doc.output("datauristring");
+    const embed = "<embed width='100%' height='100%' src='" + string + "'/>";
+    const x = window.open();
+    x.document.open();
+    x.document.write(embed);
+    x.document.close();
+  };
 
   return (
     <div className="Body" id="PDF">
-      <NavBarTraining />
+      <NavBarMemberProfile />
       <div className="Member">
         <button
           className="btn btn-secondary mb-3"
@@ -278,6 +319,7 @@ const MemberProfile = () => {
           <table className="table table-dark table-striped">
             <thead>
               <tr key={person?.id}>
+                <th>Status</th>
                 <th>Training Name</th>
                 <th>Expiration Date</th>
                 <th className="completion">Completion Date</th>
@@ -285,6 +327,7 @@ const MemberProfile = () => {
             </thead>
             <tbody>
               {memberTraining
+                //DO NOT DELETE!!!!!!
                 // ?.filter((training) => {
                 //   if (trainingParams[0].training_name === true) {
                 //     if (search === "") {
@@ -324,9 +367,11 @@ const MemberProfile = () => {
                 //     }
                 //   }
                 // })
+                // DO NOT DELETE!!!!!!
                 ?.map((item) => {
                   return (
                     <tr key={item.id}>
+                      <td className="align-middle">{CurrentDate(item)}</td>
                       <td className="align-middle">{item.training_name}</td>
                       <td className="align-middle">
                         {Date(item.completion_date, item.cert_duration)}
@@ -347,7 +392,7 @@ const MemberProfile = () => {
                           }}
                           type="button"
                         >
-                          Submit Date
+                          Submit Completion Date
                         </button>
                         <button
                           className="RemoveTraining btn btn-danger"

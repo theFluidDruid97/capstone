@@ -40,8 +40,9 @@
   padding-left: 1%;
 }
 
+/* Adjusts width of Completion Date form with buttons */
 .input-group{
-  width: 50% !important;
+  width: 100% !important;
 }
 
 .completion{

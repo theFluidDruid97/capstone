@@ -9,6 +9,7 @@ exports.up = function (knex) {
     table.integer("cert_duration");
     table.string("training_link", 500);
     table.string("training_description", 500);
+    table.timestamps(true, true);
   });
 };
 

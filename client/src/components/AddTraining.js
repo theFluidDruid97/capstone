@@ -10,7 +10,6 @@ const AddTraining = () => {
   const [message, setMessage] = useState("");
 
   let addSubmit = async (e) => {
-    // e.preventDefault(); //Used to test network. Will prevent page refresh.
     try {
       let res = await fetch("http://localhost:8080/training", {
         method: "POST",
@@ -24,15 +23,6 @@ const AddTraining = () => {
           training_description: training_description,
         }),
       });
-      if (res.status === 200) {
-        setTraining_name("");
-        setCert_duration("");
-        setTraining_link("");
-        setTraining_description("");
-        setMessage("User created successfully");
-      } else {
-        setMessage("Some error occured");
-      }
     } catch (err) {
       console.log(err);
     }

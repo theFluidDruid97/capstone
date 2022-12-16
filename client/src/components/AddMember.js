@@ -1,17 +1,40 @@
 import React, { useState } from "react";
 import NavBarAdd from "./NavBarAdd.js";
+import { Context } from "../App.js";
+import { useContext } from "react";
 import "./AddMember.css";
 
 const AddMember = () => {
-  const [dod_id, setDod_id] = useState("");
-  const [rank, setRank] = useState("");
-  const [last_name, setLast_name] = useState("");
-  const [first_name, setFirst_name] = useState("");
-  const [email, setEmail] = useState("");
-  const [unit, setUnit] = useState("");
-  const [office_symbol, setOffice_symbol] = useState("");
-  const [afsc, setAfsc] = useState("");
-  const [message, setMessage] = useState("");
+  // const [dod_id, setDod_id] = useState("");
+  // const [rank, setRank] = useState("");
+  // const [last_name, setLast_name] = useState("");
+  // const [first_name, setFirst_name] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [unit, setUnit] = useState("");
+  // const [office_symbol, setOffice_symbol] = useState("");
+  // const [afsc, setAfsc] = useState("");
+  // const [message, setMessage] = useState("");
+
+  const {
+    dod_id,
+    setDod_id,
+    rank,
+    setRank,
+    last_name,
+    setLast_name,
+    first_name,
+    setFirst_name,
+    email,
+    setEmail,
+    unit,
+    setUnit,
+    office_symbol,
+    setOffice_symbol,
+    afsc,
+    setAfsc,
+    message,
+    setMessage,
+  } = useContext(Context);
 
   let handleSubmit = async (e) => {
     try {

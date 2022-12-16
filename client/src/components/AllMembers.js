@@ -178,6 +178,74 @@ const AllMembers = () => {
               })}
           </tbody>
         </table>
+        <nav aria-label="Page navigation example">
+          <ul className="pagination pagination-sm">
+            <li className="page-item">
+              <a className="page-link bg-secondary text-white" href="#">
+                &laquo; Previous
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link bg-secondary text-white" href="#">
+                1
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link bg-secondary text-white" href="#">
+                2
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link bg-secondary text-white" href="#">
+                3
+              </a>
+            </li>
+            <li className="page-item">
+              <a className="page-link bg-secondary text-white" href="#">
+                Next &raquo;
+              </a>
+            </li>
+          </ul>
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Members Per-Page
+          </button>
+          <ul
+            class="dropdown-menu dropdown-menu-dark"
+            aria-labelledby="dropdownMenuButton2"
+          >
+            <li>
+              <a class="dropdown-item active" href="#">
+                10
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                20
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                50
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                100
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                250
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   );
