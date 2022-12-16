@@ -4,9 +4,8 @@
 }
 
 .ddm-2 {
-    left: 0px !important;
     top: 57px;
-    max-width: 140px;
+    width: 140px;
 }
 
 .ddm-2-btn {
@@ -14,5 +13,5 @@
 }
 
 .nav-btn {
-    max-width: 150px;
+    max-width: 140px;
 }

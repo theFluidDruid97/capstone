@@ -10,28 +10,36 @@ const Landing = () => {
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user_email: e.target[0].value,
-          user_password: e.target[1].value,
-        }),
-      });
-      if (res.status === 200) {
-        let user = users?.find((user) => user.user_email == e.target[0].value);
-        document.cookie = `user_id=${user.id}`;
-        document.cookie = `user_email=${user.user_email}`;
-        navigate("/home");
-        window.location.reload();
-      } else {
-        console.log("Some error occured");
+    if (
+      users?.find((user) => user.user_email == e.target[0].value) === undefined
+    ) {
+      alert("INVALID EMAIL");
+    } else {
+      try {
+        const res = await fetch("http://localhost:8080/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_email: e.target[0].value,
+            user_password: e.target[1].value,
+          }),
+        });
+        if (res.status === 200) {
+          let user = users?.find(
+            (user) => user.user_email == e.target[0].value
+          );
+          document.cookie = `user_id=${user.id}`;
+          document.cookie = `user_email=${user.user_email}`;
+          navigate("/home");
+          window.location.reload();
+        } else {
+          alert("INVALID PASSWORD");
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   };
   return (

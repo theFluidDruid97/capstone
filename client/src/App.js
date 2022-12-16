@@ -46,6 +46,17 @@ const App = () => {
   const [currentUser, setCurrentUser] = useState();
   const [memberTraining, setMemberTraining] = useState();
   const [completion_date, setCompletion_date] = useState("");
+  const [record_id, setRecord_id] = useState("");
+  const [dod_id, setDod_id] = useState("");
+  const [rank, setRank] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [first_name, setFirst_name] = useState("");
+  const [email, setEmail] = useState("");
+  const [unit, setUnit] = useState("");
+  const [office_symbol, setOffice_symbol] = useState("");
+  const [afsc, setAfsc] = useState("");
+  const [due_date, setDue_date] = useState();
+
   useEffect(() => {
     fetch("http://localhost:8080/members")
       .then((response) => response.json())
@@ -85,6 +96,26 @@ const App = () => {
           setMemberTraining,
           completion_date,
           setCompletion_date,
+          record_id,
+          setRecord_id,
+          dod_id,
+          setDod_id,
+          rank,
+          setRank,
+          last_name,
+          setLast_name,
+          first_name,
+          setFirst_name,
+          email,
+          setEmail,
+          unit,
+          setUnit,
+          office_symbol,
+          setOffice_symbol,
+          afsc,
+          setAfsc,
+          due_date,
+          setDue_date,
         }}
       >
         <Router>
