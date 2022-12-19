@@ -33,6 +33,14 @@ const App = () => {
       cert_duration: false,
     },
   ];
+  const initMemberProfileParams = [
+    {
+      status: false,
+      training_name: false,
+      expiration_date: false,
+      completion_date: false,
+    },
+  ];
   const cookies = cookie.parse(document.cookie);
   const [members, setMembers] = useState();
   const [id, setId] = useState();
@@ -42,6 +50,9 @@ const App = () => {
   const [trainingProfile, setTrainingProfile] = useState();
   const [memberParams, setMemberParams] = useState(initMemberParams);
   const [trainingParams, setTrainingParams] = useState(initTrainingParams);
+  const [memberProfileParams, setMemberProfileParams] = useState(
+    initMemberProfileParams
+  );
   const [users, setUsers] = useState();
   const [currentUser, setCurrentUser] = useState();
   const [memberTraining, setMemberTraining] = useState();
@@ -88,6 +99,8 @@ const App = () => {
           setMemberParams,
           trainingParams,
           setTrainingParams,
+          memberProfileParams,
+          setMemberProfileParams,
           users,
           setUsers,
           currentUser,

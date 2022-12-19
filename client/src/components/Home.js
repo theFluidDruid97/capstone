@@ -11,14 +11,14 @@ const Home = () => {
       <NavBarAdd />
       <div className="Home">
         <div className="header">Message Board</div>
-        {training?.map((training) => (
-          <ul className="mt-5">
-            <li>
+        <ul className="mt-5">
+          {training?.map((training) => (
+            <li key={training.training_id}>
               New training: {training.training_name}, created at{" "}
               {training.created_at}.
             </li>
-          </ul>
-        ))}
+          ))}
+        </ul>
       </div>
     </div>
   );
