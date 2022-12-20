@@ -8,8 +8,8 @@ const NavBarMemberProfile = () => {
   const {
     search,
     setSearch,
-    trainingParams,
-    setTrainingParams,
+    memberProfileParams,
+    setMemberProfileParams,
     checked,
     setChecked,
     setCurrentUser,
@@ -21,15 +21,11 @@ const NavBarMemberProfile = () => {
     setSearch(e.target.value);
   };
   const handleToggle = (e) => {
-    let updatedTrainingParams = [...trainingParams];
-    console.log(updatedTrainingParams);
-    let updatedTrainingParam = updatedTrainingParams[0][e.target.id];
-    console.log(e.target.id, updatedTrainingParam);
-    updatedTrainingParam = !updatedTrainingParam;
-    console.log(e.target.id, updatedTrainingParam);
-    updatedTrainingParams[0][e.target.id] = updatedTrainingParam;
-    setTrainingParams(updatedTrainingParams);
-    console.log(trainingParams);
+    let updatedMemberProfileParams = [...memberProfileParams];
+    let updatedMemberProfileParam = updatedMemberProfileParams[0][e.target.id];
+    updatedMemberProfileParam = !updatedMemberProfileParam;
+    updatedMemberProfileParams[0][e.target.id] = updatedMemberProfileParam;
+    setMemberProfileParams(updatedMemberProfileParams);
   };
   const handleLogout = () => {
     setCurrentUser();
@@ -102,6 +98,17 @@ const NavBarMemberProfile = () => {
             className="dropdown-menu bg-dark text-secondary"
             aria-labelledby="navbarDropdown"
           >
+            <div className="form-check ml-2">
+              <label className="form-check-label" htmlFor="dropdownCheck">
+                <input
+                  type="checkbox"
+                  className="form-check-input bg-secondary"
+                  id="status"
+                  onChange={(e) => handleToggle(e)}
+                />
+                Status
+              </label>
+            </div>
             <div className="form-check ml-2">
               <label className="form-check-label" htmlFor="dropdownCheck">
                 <input

@@ -15,7 +15,7 @@ const MemberProfile = () => {
     person,
     setPerson,
     search,
-    trainingParams,
+    memberProfileParams,
     memberTraining,
     setMemberTraining,
     completion_date,
@@ -327,47 +327,89 @@ const MemberProfile = () => {
             </thead>
             <tbody>
               {memberTraining
-                //DO NOT DELETE!!!!!!
-                // ?.filter((training) => {
-                //   if (trainingParams[0].training_name === true) {
-                //     if (search === "") {
-                //       return training;
-                //     } else if (
-                //       training.training_name
-                //         .toLowerCase()
-                //         .includes(search.toLowerCase())
-                //     ) {
-                //       return training;
-                //     }
-                //   }
-                //   if (trainingParams[0].cert_duration === true) {
-                //     if (search === "") {
-                //       return training;
-                //     } else if (
-                //       training.cert_duration.toString().includes(search)
-                //     ) {
-                //       return training;
-                //     }
-                //   }
-                //   if (
-                //     (trainingParams[0].training_name === true &&
-                //       trainingParams[0].cert_duration === true) ||
-                //     (trainingParams[0].training_name === false &&
-                //       trainingParams[0].cert_duration === false)
-                //   ) {
-                //     if (search === "") {
-                //       return training;
-                //     } else if (
-                //       training.training_name
-                //         .toLowerCase()
-                //         .includes(search.toLowerCase()) ||
-                //       training.cert_duration.toString().includes(search)
-                //     ) {
-                //       return training;
-                //     }
-                //   }
-                // })
-                // DO NOT DELETE!!!!!!
+                ?.filter((training) => {
+                  if (memberProfileParams[0].status === true) {
+                    if (search === "") {
+                      return training;
+                    } else if (
+                      CurrentDate(training)
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return training;
+                    }
+                  }
+                  if (memberProfileParams[0].training_name === true) {
+                    if (search === "") {
+                      return training;
+                    } else if (
+                      training.training_name
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return training;
+                    }
+                  }
+                  if (memberProfileParams[0].expiration_date === true) {
+                    if (search === "") {
+                      return training;
+                    } else if (
+                      Date(training.completion_date, training.cert_duration)
+                        .toString()
+                        .includes(search) ||
+                      Date(training.completion_date, training.cert_duration)
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return training;
+                    }
+                  }
+                  if (memberProfileParams[0].completion_date === true) {
+                    if (search === "") {
+                      return training;
+                    } else if (
+                      training.completion_date.toString().includes(search) ||
+                      training.completion_date
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return training;
+                    }
+                  }
+                  if (
+                    (memberProfileParams[0].status === true &&
+                      memberProfileParams[0].training_name === true &&
+                      memberProfileParams[0].expiration_date === true &&
+                      memberProfileParams[0].completion_date === true) ||
+                    (memberProfileParams[0].status === false &&
+                      memberProfileParams[0].training_name === false &&
+                      memberProfileParams[0].expiration_date === false &&
+                      memberProfileParams[0].completion_date === false)
+                  ) {
+                    if (search === "") {
+                      return training;
+                    } else if (
+                      CurrentDate(training)
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      training.training_name
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      Date(training.completion_date, training.cert_duration)
+                        .toString()
+                        .includes(search) ||
+                      Date(training.completion_date, training.cert_duration)
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      training.completion_date.toString().includes(search) ||
+                      training.completion_date
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+                    ) {
+                      return training;
+                    }
+                  }
+                })
                 ?.map((item) => {
                   return (
                     <tr key={item.id}>

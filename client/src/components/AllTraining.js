@@ -13,7 +13,7 @@ const AllTraining = () => {
     <div className="Body">
       <NavBarTraining />
       <div className="AllTraining">
-        <div className="FormHeader">All Training</div>
+        <div className="FormHeaderAT">All Training</div>
         <table className="table table-dark table-striped table-hover">
           <thead>
             <tr>

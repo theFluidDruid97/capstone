@@ -22,14 +22,10 @@ const NavBarTraining = () => {
   };
   const handleToggle = (e) => {
     let updatedTrainingParams = [...trainingParams];
-    console.log(updatedTrainingParams);
     let updatedTrainingParam = updatedTrainingParams[0][e.target.id];
-    console.log(e.target.id, updatedTrainingParam);
     updatedTrainingParam = !updatedTrainingParam;
-    console.log(e.target.id, updatedTrainingParam);
     updatedTrainingParams[0][e.target.id] = updatedTrainingParam;
     setTrainingParams(updatedTrainingParams);
-    console.log(trainingParams);
   };
   const handleLogout = () => {
     setCurrentUser();

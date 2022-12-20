@@ -11,7 +11,9 @@ const AllMembers = () => {
   // const colors [{id:1, color:"🔴"},{id:2, color:"🟡"},{id:3, color:"🟢"}]
   const { search, members, setMembers, memberParams, currentUser } =
     useContext(Context);
-  const [PageSize, setPageSize] = useState(250);
+  const [PageSize, setPageSize] = useState(5);
+
+  useEffect(() => {}, [PageSize]);
 
   let totalCount = members?.length;
   const navigate = useNavigate();
@@ -77,7 +79,7 @@ const AllMembers = () => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
     return members?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, PageSize]);
+  }, [currentPage]);
   const Pagination = (props) => {
     const {
       onPageChange,
@@ -246,41 +248,27 @@ const AllMembers = () => {
             className="dropdown-menu dropdown-menu-dark"
             aria-labelledby="dropdownMenuButton2"
           >
-            <button
-              className="btn btn-secondary"
-              value={5}
-              onClick={(e) => handlePageSize(e)}
-            >
+            <button value={5} onClick={(e) => handlePageSize(e)}>
               5
             </button>
-            <button
-              className="btn btn-secondary"
-              value={10}
-              onClick={(e) => handlePageSize(e)}
-            >
+            <button value={10} onClick={(e) => handlePageSize(e)}>
               10
             </button>
-            <button
-              className="btn btn-secondary"
-              value={50}
-              onClick={(e) => handlePageSize(e)}
-            >
-              50
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={100}
-              onClick={(e) => handlePageSize(e)}
-            >
-              100
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={250}
-              onClick={(e) => handlePageSize(e)}
-            >
-              250
-            </button>
+            <li>
+              <a className="dropdown-item" href="#">
+                50
+              </a>
+            </li>
+            <li>
+              <a className="dropdown-item" href="#">
+                100
+              </a>
+            </li>
+            <li>
+              <a className="dropdown-item" href="#">
+                250
+              </a>
+            </li>
           </ul>
           All Members
         </div>

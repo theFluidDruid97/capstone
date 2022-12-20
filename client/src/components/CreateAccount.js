@@ -28,7 +28,7 @@ const CreateAccount = () => {
   return (
     <div className="Body">
       <div className="CreateAccount">
-        <div className="FormHeader">Create Account</div>
+        <div className="FormHeaderCA">Create Account</div>
         <form
           onSubmit={() => {
             submit();
