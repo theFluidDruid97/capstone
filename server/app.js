@@ -152,7 +152,8 @@ app.get("/member_training/:id", (req, res) => {
       "member_training.record_id",
       "training.training_name",
       "training.cert_duration",
-      "member_training.completion_date"
+      "member_training.completion_date",
+      "member_training.status"
     )
     .then((records) => {
       let result = records.map((record) => record);

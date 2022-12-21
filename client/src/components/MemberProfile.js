@@ -70,7 +70,8 @@ const MemberProfile = () => {
     setOffice_symbol(person?.office_symbol);
     setAfsc(person?.afsc);
   }, [person]);
-  const CurrentDate = (item) => {
+
+  const currentDate = (item) => {
     let d1 = DateTime.now().toISO();
     let d2 = DateTime.fromFormat(`${item?.completion_date}`, "yyyy-MM-dd")
       .plus({ months: `${item?.cert_duration}` })
@@ -80,18 +81,45 @@ const MemberProfile = () => {
       .minus({ months: 2 })
       .toISO();
     if (d1 > d2) {
+      fetch(`http://localhost:8080/member_training/${urlID}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          record_id: item.record_id,
+          status: "Over Due",
+        }),
+      });
       return "Over Due";
     } else if (d1 > d3 && d1 < d2) {
-      return "Due Within 60 Days";
+      fetch(`http://localhost:8080/member_training/${urlID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          record_id: item.record_id,
+          status: "Due",
+        }),
+      });
+      return "Due";
     } else {
+      fetch(`http://localhost:8080/member_training/${urlID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          record_id: item.record_id,
+          status: "Current",
+        }),
+      });
       return "Current";
     }
   };
-  const Date = (dt, m) => {
-    const date = DateTime.fromFormat(dt, "yyyy-MM-dd")
+
+  const dante = (dt, m) => {
+    const newdate = DateTime.fromFormat(dt, "yyyy-MM-dd")
       .plus({ months: m })
       .toFormat("yyyy-MM-dd");
-    return date;
+    return newdate;
   };
   const handleDeleteClick = async (e) => {
     let res = await fetch(`http://localhost:8080/members/${urlID}`, {
@@ -185,9 +213,9 @@ const MemberProfile = () => {
       ["Status", "Training Name", "Expiration Date", "Completion Date"],
     ];
     const data = memberTraining?.map((training) => [
-      CurrentDate(training),
+      currentDate(training),
       training.training_name,
-      Date(training.completion_date, training.cert_duration),
+      dante(training.completion_date, training.cert_duration),
       training.completion_date,
     ]);
     const content = {
@@ -212,7 +240,7 @@ const MemberProfile = () => {
       <NavBarMemberProfile />
       <div className="Member">
         <button
-          className="btn btn-secondary mb-3"
+          className="btn btn-secondary mb-3 float-right"
           onClick={() => {
             generatePDF();
           }}
@@ -221,7 +249,7 @@ const MemberProfile = () => {
           Export PDF
         </button>
         <button
-          className="btn btn-secondary mb-3 ml-3"
+          className="btn btn-secondary mb-3"
           onClick={() => handleEditClick()}
         >
           Submit Member Edit(s)
@@ -235,7 +263,7 @@ const MemberProfile = () => {
         <div>
           <table className="table table-dark table-striped table-hover">
             <thead>
-              <tr key={person?.id}>
+              <tr>
                 <th>Rank</th>
                 <th>Last Name</th>
                 <th>First Name</th>
@@ -283,6 +311,7 @@ const MemberProfile = () => {
                 <td className="w-25">
                   <input
                     className="email form-control bg-dark text-white border-0"
+                    type="text"
                     placeholder={person?.email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -332,7 +361,7 @@ const MemberProfile = () => {
                     if (search === "") {
                       return training;
                     } else if (
-                      CurrentDate(training)
+                      currentDate(training)
                         .toLowerCase()
                         .includes(search.toLowerCase())
                     ) {
@@ -354,10 +383,10 @@ const MemberProfile = () => {
                     if (search === "") {
                       return training;
                     } else if (
-                      Date(training.completion_date, training.cert_duration)
+                      dante(training.completion_date, training.cert_duration)
                         .toString()
                         .includes(search) ||
-                      Date(training.completion_date, training.cert_duration)
+                      dante(training.completion_date, training.cert_duration)
                         .toLowerCase()
                         .includes(search.toLowerCase())
                     ) {
@@ -389,16 +418,16 @@ const MemberProfile = () => {
                     if (search === "") {
                       return training;
                     } else if (
-                      CurrentDate(training)
+                      currentDate(training)
                         .toLowerCase()
                         .includes(search.toLowerCase()) ||
                       training.training_name
                         .toLowerCase()
                         .includes(search.toLowerCase()) ||
-                      Date(training.completion_date, training.cert_duration)
+                      dante(training.completion_date, training.cert_duration)
                         .toString()
                         .includes(search) ||
-                      Date(training.completion_date, training.cert_duration)
+                      dante(training.completion_date, training.cert_duration)
                         .toLowerCase()
                         .includes(search.toLowerCase()) ||
                       training.completion_date.toString().includes(search) ||
@@ -413,10 +442,10 @@ const MemberProfile = () => {
                 ?.map((item) => {
                   return (
                     <tr key={item.id}>
-                      <td className="align-middle">{CurrentDate(item)}</td>
+                      <td className="align-middle">{currentDate(item)}</td>
                       <td className="align-middle">{item.training_name}</td>
                       <td className="align-middle">
-                        {Date(item.completion_date, item.cert_duration)}
+                        {dante(item.completion_date, item.cert_duration)}
                       </td>
                       <td className="input-group">
                         <input
