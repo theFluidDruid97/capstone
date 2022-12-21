@@ -53,22 +53,34 @@ const NavBarAdd = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
       <Link to="/all_members">
-        <button className="btn nav-btn btn-outline-secondary ml-2">
+        <button
+          className="btn nav-btn btn-outline-secondary ml-2"
+          onClick={() => setSearch("")}
+        >
           All Members
         </button>
       </Link>
       <Link to="/add_member">
-        <button className="btn nav-btn btn-outline-secondary ml-2">
+        <button
+          className="btn nav-btn btn-outline-secondary ml-2"
+          onClick={() => setSearch("")}
+        >
           Add Member
         </button>
       </Link>
       <Link to="/all_training">
-        <button className="btn nav-btn btn-outline-secondary ml-2">
+        <button
+          className="btn nav-btn btn-outline-secondary ml-2"
+          onClick={() => setSearch("")}
+        >
           All Training
         </button>
       </Link>
       <Link to="/add_training">
-        <button className="btn nav-btn btn-outline-secondary ml-2">
+        <button
+          className="btn nav-btn btn-outline-secondary ml-2"
+          onClick={() => setSearch("")}
+        >
           Add Training
         </button>
       </Link>
@@ -93,7 +105,7 @@ const NavBarAdd = () => {
           >
             <Link to="/user_profile">
               <button className="btn ddm-2-btn btn-outline-secondary ml-2">
-                View Profile
+                View User Profile
               </button>
             </Link>
             <button

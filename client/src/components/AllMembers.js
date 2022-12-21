@@ -8,11 +8,10 @@ import "./AllMembers.css";
 import classnames from "classnames";
 
 const AllMembers = () => {
-  const { search, members, setMembers, memberParams, currentUser } =
+  const { search, setSearch, members, setMembers, memberParams, currentUser } =
     useContext(Context);
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(10);
   const [siblingCount, setSiblingCount] = useState(1);
   const [member_training, setMember_training] = useState();
   const [overallStatus, setOverallStatus] = useState([]);
@@ -83,7 +82,7 @@ const AllMembers = () => {
         "AFSC",
       ],
     ];
-    const data = members.map((item) => [
+    const data = filteredMembers.map((item) => [
       overallStatus[item.id]?.text,
       item.rank,
       item.last_name,
@@ -110,122 +109,115 @@ const AllMembers = () => {
     x.document.write(embed);
     x.document.close();
   };
-  useEffect(() => {
-    setTotalCount(members?.length);
-  }, [members]);
   const range = (start, end) => {
     let length = end - start + 1;
     return Array.from({ length }, (_, idx) => idx + start);
   };
+  let filteredMembers = members;
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
     const lastPageIndex = firstPageIndex + pageSize;
-    return members
-      ?.filter((member) => {
-        if (memberParams[0].rank === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (member.rank.toLowerCase().includes(search.toLowerCase())) {
-            return member;
-          }
+    filteredMembers = members?.filter((member) => {
+      if (memberParams[0].rank === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (member.rank.toLowerCase().includes(search.toLowerCase())) {
+          return member;
         }
-        if (memberParams[0].last_name === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.last_name.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
-        }
-        if (memberParams[0].first_name === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.first_name.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
-        }
-        if (memberParams[0].dod_id === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.dod_id.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
-        }
-        if (memberParams[0].email === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.email.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
-        }
-        if (memberParams[0].unit === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (member.unit.toLowerCase().includes(search.toLowerCase())) {
-            return member;
-          }
-        }
-        if (memberParams[0].office_symbol === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.office_symbol.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
-        }
-        if (memberParams[0].afsc === true) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (member.afsc.toLowerCase().includes(search.toLowerCase())) {
-            return member;
-          }
-        }
-        if (
-          (memberParams[0].rank === true &&
-            memberParams[0].last_name === true &&
-            memberParams[0].first_name === true &&
-            memberParams[0].dod_id === true &&
-            memberParams[0].email === true &&
-            memberParams[0].unit === true &&
-            memberParams[0].office_symbol === true &&
-            memberParams[0].afsc === true) ||
-          (memberParams[0].rank === false &&
-            memberParams[0].last_name === false &&
-            memberParams[0].first_name === false &&
-            memberParams[0].dod_id === false &&
-            memberParams[0].email === false &&
-            memberParams[0].unit === false &&
-            memberParams[0].office_symbol === false &&
-            memberParams[0].afsc === false)
+      }
+      if (memberParams[0].last_name === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (
+          member.last_name.toLowerCase().includes(search.toLowerCase())
         ) {
-          if (search === "") {
-            return members?.slice(firstPageIndex, lastPageIndex);
-          } else if (
-            member.rank.toLowerCase().includes(search.toLowerCase()) ||
-            member.last_name.toLowerCase().includes(search.toLowerCase()) ||
-            member.first_name.toLowerCase().includes(search.toLowerCase()) ||
-            member.dod_id.toLowerCase().includes(search.toLowerCase()) ||
-            member.email.toLowerCase().includes(search.toLowerCase()) ||
-            member.unit.toLowerCase().includes(search.toLowerCase()) ||
-            member.office_symbol.toLowerCase().includes(search.toLowerCase()) ||
-            member.afsc.toLowerCase().includes(search.toLowerCase())
-          ) {
-            return member;
-          }
+          return member;
         }
-      })
-      .slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, pageSize, members, search]);
-  const usePagination = (totalCount, pageSize, siblingCount, currentPage) => {
-    const totalPageCount = Math.ceil(totalCount / pageSize);
+      }
+      if (memberParams[0].first_name === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (
+          member.first_name.toLowerCase().includes(search.toLowerCase())
+        ) {
+          return member;
+        }
+      }
+      if (memberParams[0].dod_id === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (member.dod_id.toLowerCase().includes(search.toLowerCase())) {
+          return member;
+        }
+      }
+      if (memberParams[0].email === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (member.email.toLowerCase().includes(search.toLowerCase())) {
+          return member;
+        }
+      }
+      if (memberParams[0].unit === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (member.unit.toLowerCase().includes(search.toLowerCase())) {
+          return member;
+        }
+      }
+      if (memberParams[0].office_symbol === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (
+          member.office_symbol.toLowerCase().includes(search.toLowerCase())
+        ) {
+          return member;
+        }
+      }
+      if (memberParams[0].afsc === true) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (member.afsc.toLowerCase().includes(search.toLowerCase())) {
+          return member;
+        }
+      }
+      if (
+        (memberParams[0].rank === true &&
+          memberParams[0].last_name === true &&
+          memberParams[0].first_name === true &&
+          memberParams[0].dod_id === true &&
+          memberParams[0].email === true &&
+          memberParams[0].unit === true &&
+          memberParams[0].office_symbol === true &&
+          memberParams[0].afsc === true) ||
+        (memberParams[0].rank === false &&
+          memberParams[0].last_name === false &&
+          memberParams[0].first_name === false &&
+          memberParams[0].dod_id === false &&
+          memberParams[0].email === false &&
+          memberParams[0].unit === false &&
+          memberParams[0].office_symbol === false &&
+          memberParams[0].afsc === false)
+      ) {
+        if (search === "") {
+          return members?.slice(firstPageIndex, lastPageIndex);
+        } else if (
+          member.rank.toLowerCase().includes(search.toLowerCase()) ||
+          member.last_name.toLowerCase().includes(search.toLowerCase()) ||
+          member.first_name.toLowerCase().includes(search.toLowerCase()) ||
+          member.dod_id.toLowerCase().includes(search.toLowerCase()) ||
+          member.email.toLowerCase().includes(search.toLowerCase()) ||
+          member.unit.toLowerCase().includes(search.toLowerCase()) ||
+          member.office_symbol.toLowerCase().includes(search.toLowerCase()) ||
+          member.afsc.toLowerCase().includes(search.toLowerCase())
+        ) {
+          return member;
+        }
+      }
+    });
+    return filteredMembers?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, pageSize, members, search, overallStatus, memberParams]);
+  const usePagination = (pageSize, siblingCount, currentPage) => {
+    const totalPageCount = Math.ceil(filteredMembers?.length / pageSize);
     const totalPageNumbers = siblingCount + 5;
     if (totalPageNumbers >= totalPageCount) {
       return range(1, totalPageCount);
@@ -258,20 +250,13 @@ const AllMembers = () => {
     }
   };
   const Pagination = (props) => {
-    const {
-      onPageChange,
-      totalCount,
-      siblingCount,
-      currentPage,
-      pageSize,
-      className,
-    } = props;
+    const { onPageChange, siblingCount, currentPage, pageSize, className } =
+      props;
     const paginationRange = usePagination(
-      totalCount || 10,
       pageSize,
       siblingCount || 1,
       currentPage
-    );
+    ) || [1, 2, 3, 4, 5];
     if (currentPage === 0 || paginationRange?.length < 2) {
       return null;
     }
@@ -331,6 +316,11 @@ const AllMembers = () => {
   const handlepageSize = (e) => {
     setPageSize(parseInt(e.target.value));
   };
+  useEffect(() => {
+    setTimeout(() => {
+      document.getElementById("fix-status").click();
+    }, 500);
+  }, []);
 
   return (
     <div className="Body">
@@ -351,35 +341,35 @@ const AllMembers = () => {
             aria-labelledby="dropdownMenuButton2"
           >
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-1"
               value={10}
               onClick={(e) => handlepageSize(e)}
             >
               10
             </button>
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-1"
               value={25}
               onClick={(e) => handlepageSize(e)}
             >
               25
             </button>
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-1"
               value={50}
               onClick={(e) => handlepageSize(e)}
             >
               50
             </button>
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-1"
               value={100}
               onClick={(e) => handlepageSize(e)}
             >
               100
             </button>
             <button
-              className="btn btn-secondary"
+              className="btn btn-secondary ml-1 mr-1"
               value={250}
               onClick={(e) => handlepageSize(e)}
             >
@@ -397,50 +387,50 @@ const AllMembers = () => {
             Export PDF
           </button>
         </div>
-        <table className="table table-dark table-striped table-hover sortable">
-          <thead>
-            <tr>
-              <th data-sort="status">Status</th>
-              <th data-sort="rank">Rank</th>
-              <th data-sort="last_name">Last Name</th>
-              <th data-sort="first_name">First Name</th>
-              <th data-sort="dod_id">DoD ID</th>
-              <th data-sort="email">E-Mail Address</th>
-              <th data-sort="unit">Unit</th>
-              <th data-sort="office_symbol">Office Symbol</th>
-              <th data-sort="afsc">AFSC</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentTableData?.map((item) => {
-              return (
-                <tr
-                  className="member-row"
-                  onClick={() => {
-                    navigate(`/all_members/${item.id}`);
-                  }}
-                  key={item.id}
-                >
-                  <td className="d-flex justify-content-center">
-                    {overallStatus[item.id]?.status}
-                  </td>
-                  <td>{item.rank}</td>
-                  <td>{item.last_name}</td>
-                  <td>{item.first_name}</td>
-                  <td>{item.dod_id}</td>
-                  <td>{item.email}</td>
-                  <td>{item.unit}</td>
-                  <td>{item.office_symbol}</td>
-                  <td>{item.afsc}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="PDF3">
+          <table className="table p-3 table-dark table-striped table-hover sortable">
+            <thead>
+              <tr>
+                <th data-sort="status">Status</th>
+                <th data-sort="rank">Rank</th>
+                <th data-sort="last_name">Last Name</th>
+                <th data-sort="first_name">First Name</th>
+                <th data-sort="dod_id">DoD ID</th>
+                <th data-sort="email">E-Mail Address</th>
+                <th data-sort="unit">Unit</th>
+                <th data-sort="office_symbol">Office Symbol</th>
+                <th data-sort="afsc">AFSC</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentTableData?.map((item) => {
+                return (
+                  <tr
+                    className="member-row"
+                    onClick={() => {
+                      navigate(`/all_members/${item.id}`);
+                      setSearch("");
+                    }}
+                    key={item.id}
+                  >
+                    <td>{overallStatus[item.id]?.status}</td>
+                    <td>{item.rank}</td>
+                    <td>{item.last_name}</td>
+                    <td>{item.first_name}</td>
+                    <td>{item.dod_id}</td>
+                    <td>{item.email}</td>
+                    <td>{item.unit}</td>
+                    <td>{item.office_symbol}</td>
+                    <td>{item.afsc}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
         <Pagination
           className="pagination-bar"
           currentPage={currentPage}
-          totalCount={totalCount}
           pageSize={pageSize}
           onPageChange={(page) => setCurrentPage(page)}
         />

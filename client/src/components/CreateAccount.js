@@ -42,7 +42,7 @@ const CreateAccount = () => {
           >
             <div className="form-label">E-Mail Address</div>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-white"
               type="text"
               placeholder="Enter E-Mail Address"
             />
@@ -53,12 +53,19 @@ const CreateAccount = () => {
           >
             <div className="form-label">Password</div>
             <input
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-white"
               type="text"
               placeholder="Enter Password"
             />
           </div>
-          <button className="btn btn-secondary" type="submit">
+          <button
+            className="btn btn-danger mr-3"
+            type="button"
+            onClick={() => navigate("/")}
+          >
+            Cancel
+          </button>
+          <button className="btn btn-secondary ml-3" type="submit">
             Submit
           </button>
         </form>

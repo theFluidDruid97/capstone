@@ -70,7 +70,6 @@ const MemberProfile = () => {
     setOffice_symbol(person?.office_symbol);
     setAfsc(person?.afsc);
   }, [person]);
-
   const currentDate = (item) => {
     let d1 = DateTime.now().toISO();
     let d2 = DateTime.fromFormat(`${item?.completion_date}`, "yyyy-MM-dd")
@@ -92,7 +91,7 @@ const MemberProfile = () => {
         }),
       });
       return "Over Due";
-    } else if (d1 > d3 && d1 < d2) {
+    } else if ((d1 > d3 && d1 < d2) || d2 == null) {
       fetch(`http://localhost:8080/member_training/${urlID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -114,12 +113,15 @@ const MemberProfile = () => {
       return "Current";
     }
   };
-
   const dante = (dt, m) => {
     const newdate = DateTime.fromFormat(dt, "yyyy-MM-dd")
       .plus({ months: m })
       .toFormat("yyyy-MM-dd");
-    return newdate;
+    if (newdate == "Invalid DateTime") {
+      return "NOT COMPLETE";
+    } else {
+      return newdate;
+    }
   };
   const handleDeleteClick = async (e) => {
     let res = await fetch(`http://localhost:8080/members/${urlID}`, {
@@ -344,7 +346,7 @@ const MemberProfile = () => {
             </tbody>
           </table>
         </div>
-        <div id="PDF2">
+        <div className="PDF2">
           <table className="table table-dark table-striped">
             <thead>
               <tr key={person?.id}>
@@ -459,6 +461,22 @@ const MemberProfile = () => {
                         <button
                           className="btn btn-secondary"
                           onClick={(e) => {
+                            navigate(
+                              `/all_training/${
+                                training?.find(
+                                  (training) =>
+                                    training.training_name == item.training_name
+                                ).id
+                              }`
+                            );
+                          }}
+                          type="button"
+                        >
+                          View Training Profile
+                        </button>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={(e) => {
                             handleCompletionClick(e, item);
                           }}
                           type="button"
@@ -480,33 +498,33 @@ const MemberProfile = () => {
                 })}
             </tbody>
           </table>
-          <div className="dropdown">
-            <button
-              className="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Assign Training
-            </button>
-            <div
-              className="dropdown-menu ddm-3 bg-secondary"
-              aria-labelledby="dropdownMenuButton"
-            >
-              {training?.map((item) => {
-                return (
-                  <button
-                    onClick={(e) => handleAssignTrainingClick(e, item)}
-                    className="dropdown-item btn btn-secondary"
-                    key={item.id}
-                  >
-                    {item.training_name}
-                  </button>
-                );
-              })}
-            </div>
+        </div>
+        <div className="dropdown">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Assign Training
+          </button>
+          <div
+            className="dropdown-menu ddm-3 bg-secondary"
+            aria-labelledby="dropdownMenuButton"
+          >
+            {training?.map((item) => {
+              return (
+                <button
+                  onClick={(e) => handleAssignTrainingClick(e, item)}
+                  className="dropdown-item btn btn-secondary"
+                  key={item.id}
+                >
+                  {item.training_name}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
