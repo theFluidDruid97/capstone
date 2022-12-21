@@ -38,9 +38,7 @@ const AllTraining = () => {
                 if (trainingParams[0].cert_duration === true) {
                   if (search === "") {
                     return training;
-                  } else if (
-                    training.cert_duration.toString().includes(search)
-                  ) {
+                  } else if (training.cert_duration.toString() == search) {
                     return training;
                   }
                 }
@@ -56,7 +54,7 @@ const AllTraining = () => {
                     training.training_name
                       .toLowerCase()
                       .includes(search.toLowerCase()) ||
-                    training.cert_duration.toString().includes(search)
+                    training.cert_duration.toString() == search
                   ) {
                     return training;
                   }

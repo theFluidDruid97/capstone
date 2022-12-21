@@ -13,11 +13,17 @@
   background-color: #212529;
   min-width: 70%;
   position: absolute;
+  height: 70%;
   top: 55%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   border-radius: 20px;
+}
+
+.PDF3 {
+  max-height: 83.5%;
+  overflow-y: auto;
 }
 
 .FormHeaderAM{
@@ -27,4 +33,9 @@
 
 .member-row:hover {
   cursor: pointer;
+}
+
+.dropdown-menu {
+  left: -5px !important;
+  top: 57px
 }

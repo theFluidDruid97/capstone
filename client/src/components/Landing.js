@@ -59,7 +59,7 @@ const Landing = () => {
             <label htmlFor="email">E-Mail Address</label>
             <input
               type="email"
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-white"
               id="email"
               placeholder="E-Mail Address"
             />
@@ -68,7 +68,7 @@ const Landing = () => {
             <label htmlFor="password">Password</label>
             <input
               type="password"
-              className="form-control bg-dark text-secondary"
+              className="form-control bg-dark text-white"
               id="password"
               placeholder="Password"
             />
@@ -90,7 +90,7 @@ const Landing = () => {
           </Link>
         </p>
         <p></p>
-        <p className="lead">
+        {/* <p className="lead">
           <a
             className="btn btn-primary btn-lg sign-in-button"
             href="#"
@@ -98,15 +98,18 @@ const Landing = () => {
           >
             CAC SIGN IN
           </a>
-        </p>
+        </p> */}
         <footer className="footer">
           <p className="mt-5 mb-0">By continuing you agree to accept our </p>
           <p className="mt-0">
-            <a href="#" role="button">
+            <a
+              href="https://policies.google.com/privacy?hl=en-US"
+              role="button"
+            >
               Privacy Policy
             </a>{" "}
             and{" "}
-            <a href="#" role="button">
+            <a href="https://policies.google.com/terms?hl=en-US" role="button">
               Terms of Service
             </a>
             .
