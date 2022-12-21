@@ -10,6 +10,7 @@ exports.up = function (knex) {
     table.foreign("member_id").references("members.id").onDelete("CASCADE");
     table.foreign("training_id").references("training.id");
     table.string("completion_date");
+    table.string("status");
   });
 };
 

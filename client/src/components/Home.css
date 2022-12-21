@@ -3,30 +3,20 @@
       rgba(253, 209, 141),
       rgba(78, 53, 21));
   min-height: 100vh;
+  overflow: hidden;
 }
 
-.header {
-  text-align: center;
-  font-size: 3rem;
-  font-weight: bold;
-}
-  
-.Home {
-  color: rgba(255, 255, 255);
-  font-size: 1.5rem;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  padding-left: 1%;
-  padding-right: 1%;
-  background-color: #212529;
-  min-width: 60%;
-  min-height: 70%;
-  position: absolute;
-  top: 55%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+.card {
   border-radius: 20px;
+  box-shadow: 2px 2px 2px 2px rgb(73, 73, 73);
 }
 
+.tcard {
+  border-radius: 20px;
+  min-height: 87vh;
+  box-shadow: 2px 2px 2px 2px rgb(73, 73, 73);
+}
 
+h1 {
+  text-align: center;
+}

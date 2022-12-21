@@ -8,13 +8,62 @@ import "./AllMembers.css";
 import classnames from "classnames";
 
 const AllMembers = () => {
-  // const colors [{id:1, color:"🔴"},{id:2, color:"🟡"},{id:3, color:"🟢"}]
   const { search, members, setMembers, memberParams, currentUser } =
     useContext(Context);
-  const [PageSize, setPageSize] = useState(250);
-
-  let totalCount = members?.length;
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(10);
+  const [siblingCount, setSiblingCount] = useState(1);
+  const [member_training, setMember_training] = useState();
+  const [overallStatus, setOverallStatus] = useState([]);
   const navigate = useNavigate();
+  const DOTS = "...";
+  useEffect(() => {
+    setOverallStatus([]);
+    let updatedOverallStatus = [...overallStatus];
+    members?.map((member) => {
+      let collection = [];
+      let memberID = member.id;
+      let memberOverallStatus;
+      let memberStatusText;
+      fetch(`http://localhost:8080/member_training/${member.id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          data?.map((item) => {
+            if (item.status == "Over Due") {
+              collection.push("Over Due");
+            } else if (item.status == "Due") {
+              collection.push("Due");
+            } else if (item.status == "Current") {
+              collection.push("Current");
+            }
+          });
+          return collection;
+        })
+        .then((collection) => {
+          if (
+            collection.find((element) => element == "Over Due") !== undefined
+          ) {
+            memberOverallStatus = "🔴";
+            memberStatusText = "Over Due";
+          } else if (
+            collection.find((element) => element == "Due") !== undefined
+          ) {
+            memberOverallStatus = "🟡";
+            memberStatusText = "Due";
+          } else {
+            memberOverallStatus = "🟢";
+            memberStatusText = "Current";
+          }
+          updatedOverallStatus[memberID] = {
+            memberID: memberID,
+            status: memberOverallStatus,
+            text: memberStatusText,
+          };
+          setOverallStatus(updatedOverallStatus);
+        });
+    });
+  }, [members]);
   const generatePDF = () => {
     const unit = "pt";
     const size = "A4";
@@ -34,8 +83,8 @@ const AllMembers = () => {
         "AFSC",
       ],
     ];
-    const data = members?.map((item) => [
-      "PLACEHOLDER",
+    const data = members.map((item) => [
+      overallStatus[item.id]?.text,
       item.rank,
       item.last_name,
       item.first_name,
@@ -61,52 +110,177 @@ const AllMembers = () => {
     x.document.write(embed);
     x.document.close();
   };
-  const handlePageSize = (e) => {
-    setPageSize(e.target.value);
-    console.log("PAGE SIZE ==>", PageSize);
-  };
-  console.log("MEMBERS ==>", members);
-  const DOTS = "...";
-  console.log("TOTAL COUNT ==>", totalCount);
+  useEffect(() => {
+    setTotalCount(members?.length);
+  }, [members]);
   const range = (start, end) => {
     let length = end - start + 1;
     return Array.from({ length }, (_, idx) => idx + start);
   };
-  const [currentPage, setCurrentPage] = useState(1);
   const currentTableData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return members?.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, PageSize]);
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return members
+      ?.filter((member) => {
+        if (memberParams[0].rank === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (member.rank.toLowerCase().includes(search.toLowerCase())) {
+            return member;
+          }
+        }
+        if (memberParams[0].last_name === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.last_name.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+        if (memberParams[0].first_name === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.first_name.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+        if (memberParams[0].dod_id === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.dod_id.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+        if (memberParams[0].email === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.email.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+        if (memberParams[0].unit === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (member.unit.toLowerCase().includes(search.toLowerCase())) {
+            return member;
+          }
+        }
+        if (memberParams[0].office_symbol === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.office_symbol.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+        if (memberParams[0].afsc === true) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (member.afsc.toLowerCase().includes(search.toLowerCase())) {
+            return member;
+          }
+        }
+        if (
+          (memberParams[0].rank === true &&
+            memberParams[0].last_name === true &&
+            memberParams[0].first_name === true &&
+            memberParams[0].dod_id === true &&
+            memberParams[0].email === true &&
+            memberParams[0].unit === true &&
+            memberParams[0].office_symbol === true &&
+            memberParams[0].afsc === true) ||
+          (memberParams[0].rank === false &&
+            memberParams[0].last_name === false &&
+            memberParams[0].first_name === false &&
+            memberParams[0].dod_id === false &&
+            memberParams[0].email === false &&
+            memberParams[0].unit === false &&
+            memberParams[0].office_symbol === false &&
+            memberParams[0].afsc === false)
+        ) {
+          if (search === "") {
+            return members?.slice(firstPageIndex, lastPageIndex);
+          } else if (
+            member.rank.toLowerCase().includes(search.toLowerCase()) ||
+            member.last_name.toLowerCase().includes(search.toLowerCase()) ||
+            member.first_name.toLowerCase().includes(search.toLowerCase()) ||
+            member.dod_id.toLowerCase().includes(search.toLowerCase()) ||
+            member.email.toLowerCase().includes(search.toLowerCase()) ||
+            member.unit.toLowerCase().includes(search.toLowerCase()) ||
+            member.office_symbol.toLowerCase().includes(search.toLowerCase()) ||
+            member.afsc.toLowerCase().includes(search.toLowerCase())
+          ) {
+            return member;
+          }
+        }
+      })
+      .slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, pageSize, members, search]);
+  const usePagination = (totalCount, pageSize, siblingCount, currentPage) => {
+    const totalPageCount = Math.ceil(totalCount / pageSize);
+    const totalPageNumbers = siblingCount + 5;
+    if (totalPageNumbers >= totalPageCount) {
+      return range(1, totalPageCount);
+    }
+    const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
+    const rightSiblingIndex = Math.min(
+      currentPage + siblingCount,
+      totalPageCount
+    );
+    const shouldShowLeftDots = leftSiblingIndex > 2;
+    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
+    const firstPageIndex = 1;
+    const lastPageIndex = totalPageCount;
+    if (!shouldShowLeftDots && shouldShowRightDots) {
+      let leftItemCount = 3 + 2 * siblingCount;
+      let leftRange = range(1, leftItemCount);
+      return [...leftRange, DOTS, totalPageCount];
+    }
+    if (shouldShowLeftDots && !shouldShowRightDots) {
+      let rightItemCount = 3 + 2 * siblingCount;
+      let rightRange = range(
+        totalPageCount - rightItemCount + 1,
+        totalPageCount
+      );
+      return [firstPageIndex, DOTS, ...rightRange];
+    }
+    if (shouldShowLeftDots && shouldShowRightDots) {
+      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
+      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
+    }
+  };
   const Pagination = (props) => {
     const {
       onPageChange,
       totalCount,
-      siblingCount = 1,
+      siblingCount,
       currentPage,
-      PageSize,
+      pageSize,
       className,
     } = props;
-    const paginationRange = usePagination({
-      currentPage,
-      totalCount,
-      siblingCount,
-      PageSize,
-    });
-    console.log(paginationRange);
-
+    const paginationRange = usePagination(
+      totalCount || 10,
+      pageSize,
+      siblingCount || 1,
+      currentPage
+    );
     if (currentPage === 0 || paginationRange?.length < 2) {
       return null;
     }
-
     const onNext = () => {
       onPageChange(currentPage + 1);
     };
-
     const onPrevious = () => {
       onPageChange(currentPage - 1);
     };
-
     let lastPage = paginationRange[paginationRange?.length - 1];
     return (
       <div
@@ -131,7 +305,6 @@ const AllMembers = () => {
               </button>
             );
           }
-
           return (
             <button
               className={classnames("pagination-item btn btn-secondary", {
@@ -155,75 +328,65 @@ const AllMembers = () => {
       </div>
     );
   };
-
-  const usePagination = ({
-    totalCount,
-    PageSize,
-    siblingCount = 1,
-    currentPage,
-  }) => {
-    const paginationRange = useMemo(() => {
-      const totalPageCount = Math.ceil(totalCount / PageSize);
-      console.log("TOTAL COUNT/PAGE SIZE ==>", totalCount, "/", PageSize);
-      console.log("TOTAL PAGE COUNT ==>", totalPageCount);
-
-      // Pages count is determined as siblingCount + firstPage + lastPage + currentPage + 2*DOTS
-      const totalPageNumbers = siblingCount + 5;
-
-      /*
-      If the number of pages is less than the page numbers we want to show in our
-      paginationComponent, we return the range [1..totalPageCount]
-    */
-      if (totalPageNumbers >= totalPageCount) {
-        return range(1, totalPageCount);
-      }
-
-      const leftSiblingIndex = Math.max(currentPage - siblingCount, 1);
-      const rightSiblingIndex = Math.min(
-        currentPage + siblingCount,
-        totalPageCount
-      );
-
-      /*
-      We do not want to show dots if there is only one position left
-      after/before the left/right page count as that would lead to a change if our Pagination
-      component size which we do not want
-    */
-      const shouldShowLeftDots = leftSiblingIndex > 2;
-      const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2;
-
-      const firstPageIndex = 1;
-      const lastPageIndex = totalPageCount;
-
-      if (!shouldShowLeftDots && shouldShowRightDots) {
-        let leftItemCount = 3 + 2 * siblingCount;
-        let leftRange = range(1, leftItemCount);
-
-        return [...leftRange, DOTS, totalPageCount];
-      }
-
-      if (shouldShowLeftDots && !shouldShowRightDots) {
-        let rightItemCount = 3 + 2 * siblingCount;
-        let rightRange = range(
-          totalPageCount - rightItemCount + 1,
-          totalPageCount
-        );
-        return [firstPageIndex, DOTS, ...rightRange];
-      }
-
-      if (shouldShowLeftDots && shouldShowRightDots) {
-        let middleRange = range(leftSiblingIndex, rightSiblingIndex);
-        return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
-      }
-    }, [totalCount, PageSize, siblingCount, currentPage]);
-    return paginationRange;
+  const handlepageSize = (e) => {
+    setPageSize(parseInt(e.target.value));
   };
 
   return (
     <div className="Body">
       <NavBar />
       <div className="AllMembers">
-        <div className="FormHeaderAM">
+        <div className="mb-3 d-flex justify-content-between align-items-center">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Members/Page
+          </button>
+          <ul
+            className="dropdown-menu dropdown-menu-dark"
+            aria-labelledby="dropdownMenuButton2"
+          >
+            <button
+              className="btn btn-secondary"
+              value={10}
+              onClick={(e) => handlepageSize(e)}
+            >
+              10
+            </button>
+            <button
+              className="btn btn-secondary"
+              value={25}
+              onClick={(e) => handlepageSize(e)}
+            >
+              25
+            </button>
+            <button
+              className="btn btn-secondary"
+              value={50}
+              onClick={(e) => handlepageSize(e)}
+            >
+              50
+            </button>
+            <button
+              className="btn btn-secondary"
+              value={100}
+              onClick={(e) => handlepageSize(e)}
+            >
+              100
+            </button>
+            <button
+              className="btn btn-secondary"
+              value={250}
+              onClick={(e) => handlepageSize(e)}
+            >
+              250
+            </button>
+          </ul>
+          <span className="FormHeaderAM">All Members</span>
           <button
             className="btn btn-secondary"
             onClick={() => {
@@ -233,58 +396,8 @@ const AllMembers = () => {
           >
             Export PDF
           </button>
-          <button
-            className="btn btn-secondary dropdown-toggle ml-3"
-            type="button"
-            id="dropdownMenuButton2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Members Per-Page
-          </button>
-          <ul
-            className="dropdown-menu dropdown-menu-dark"
-            aria-labelledby="dropdownMenuButton2"
-          >
-            <button
-              className="btn btn-secondary"
-              value={5}
-              onClick={(e) => handlePageSize(e)}
-            >
-              5
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={10}
-              onClick={(e) => handlePageSize(e)}
-            >
-              10
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={50}
-              onClick={(e) => handlePageSize(e)}
-            >
-              50
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={100}
-              onClick={(e) => handlePageSize(e)}
-            >
-              100
-            </button>
-            <button
-              className="btn btn-secondary"
-              value={250}
-              onClick={(e) => handlePageSize(e)}
-            >
-              250
-            </button>
-          </ul>
-          All Members
         </div>
-        <table className="table table-dark table-striped table-hover">
+        <table className="table table-dark table-striped table-hover sortable">
           <thead>
             <tr>
               <th data-sort="status">Status</th>
@@ -299,156 +412,36 @@ const AllMembers = () => {
             </tr>
           </thead>
           <tbody>
-            {currentTableData
-              ?.filter((member) => {
-                if (memberParams[0].rank === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.rank.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].last_name === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.last_name
-                      .toLowerCase()
-                      .includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].first_name === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.first_name
-                      .toLowerCase()
-                      .includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].dod_id === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.dod_id.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].email === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.email.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].unit === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.unit.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].office_symbol === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.office_symbol
-                      .toLowerCase()
-                      .includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (memberParams[0].afsc === true) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.afsc.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-                if (
-                  (memberParams[0].rank === true &&
-                    memberParams[0].last_name === true &&
-                    memberParams[0].first_name === true &&
-                    memberParams[0].dod_id === true &&
-                    memberParams[0].email === true &&
-                    memberParams[0].unit === true &&
-                    memberParams[0].office_symbol === true &&
-                    memberParams[0].afsc === true) ||
-                  (memberParams[0].rank === false &&
-                    memberParams[0].last_name === false &&
-                    memberParams[0].first_name === false &&
-                    memberParams[0].dod_id === false &&
-                    memberParams[0].email === false &&
-                    memberParams[0].unit === false &&
-                    memberParams[0].office_symbol === false &&
-                    memberParams[0].afsc === false)
-                ) {
-                  if (search === "") {
-                    return member;
-                  } else if (
-                    member.rank.toLowerCase().includes(search.toLowerCase()) ||
-                    member.last_name
-                      .toLowerCase()
-                      .includes(search.toLowerCase()) ||
-                    member.first_name
-                      .toLowerCase()
-                      .includes(search.toLowerCase()) ||
-                    member.dod_id
-                      .toLowerCase()
-                      .includes(search.toLowerCase()) ||
-                    member.email.toLowerCase().includes(search.toLowerCase()) ||
-                    member.unit.toLowerCase().includes(search.toLowerCase()) ||
-                    member.office_symbol
-                      .toLowerCase()
-                      .includes(search.toLowerCase()) ||
-                    member.afsc.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return member;
-                  }
-                }
-              })
-              .map((item) => {
-                return (
-                  <tr
-                    className="member-row"
-                    onClick={() => {
-                      navigate(`/all_members/${item.id}`);
-                    }}
-                    key={item.id}
-                  >
-                    <td className="text-danger">🔴</td>
-                    <td>{item.rank}</td>
-                    <td>{item.last_name}</td>
-                    <td>{item.first_name}</td>
-                    <td>{item.dod_id}</td>
-                    <td>{item.email}</td>
-                    <td>{item.unit}</td>
-                    <td>{item.office_symbol}</td>
-                    <td>{item.afsc}</td>
-                  </tr>
-                );
-              })}
+            {currentTableData?.map((item) => {
+              return (
+                <tr
+                  className="member-row"
+                  onClick={() => {
+                    navigate(`/all_members/${item.id}`);
+                  }}
+                  key={item.id}
+                >
+                  <td className="d-flex justify-content-center">
+                    {overallStatus[item.id]?.status}
+                  </td>
+                  <td>{item.rank}</td>
+                  <td>{item.last_name}</td>
+                  <td>{item.first_name}</td>
+                  <td>{item.dod_id}</td>
+                  <td>{item.email}</td>
+                  <td>{item.unit}</td>
+                  <td>{item.office_symbol}</td>
+                  <td>{item.afsc}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
         <Pagination
           className="pagination-bar"
           currentPage={currentPage}
           totalCount={totalCount}
-          PageSize={PageSize}
+          pageSize={pageSize}
           onPageChange={(page) => setCurrentPage(page)}
         />
       </div>
